@@ -27,6 +27,7 @@
         {
             "type":"slide",
             "name":"Contraste",
+            "nameForm":"contrasteform",
             "init": 0,
             "end": 5,
             "next": true
@@ -34,23 +35,25 @@
         {
             "type": "select",
             "options": [
-                {"id": 0, "value": "tres"},
-                {"id": 1, "value": "cuatro"},
-                {"id": 2, "value": "cinco"}
+                {"id": 0, "value": "Verde"},
+                {"id": 1, "value": "Amarillo"},
+                {"id": 2, "value": "Azul"}
             ],
+            "nameForm":"colors",
             "name": "Seleccion de logo",
             "next": false
         },
         {
             "type":"slide",
             "name":"Contraste",
+            "nameForm":"contrasteInit",
             "init": 0,
             "end": 3,
             "next": true
         },
         {
             "type":"checkbox-multi",
-            "name":"campo multiple",
+            "name":"Seleccione los logotipos que mas te interesan",
             "nameForm": "logoCollections",
             "question": "Que logos Preferirias?",
             "options": [

@@ -22,14 +22,15 @@ $(() => {
         var r = '';
         var o = '';
         var next = true;
+        r +=  '<h4 class="text-center mb-3 ymb-mainTitle pb-2">'+q.name+'</h4>';
         switch (q.type) {
             case 'select':
                 var next = (q.next == undefined) ? true : false;
                 for (const k in q.options) {
                     o += '<option value="' + q.options[k].id + '">' + q.options[k].value+'</option>' 
                 }
-                r = '<div class="form-group">'
-                +'<label for="exampleFormControlSelect1">'+ q.name +'</label>'
+                r += '<div class="form-group">'
+                +'<label>'+ q.name +'</label>'
                 +'<select class="form-control" data-next="'+next+'">'
                 + o
                 +'</select>'
@@ -38,19 +39,17 @@ $(() => {
                 break;
             case 'slide':
                 var next = (q.next == undefined) ? true : false;
-                r = '<label for="customRange2">'+ q.name +'</label>'
-                + '<input type="range" class="custom-range" min="'+ q.init +'" max="'+q.end+'" data-next="'+next+'">';
+                r += '<label>'+ q.name +'</label>'
+                + '<input type="range" name="'+q.nameForm+'" class="custom-range" min="'+ q.init +'" max="'+q.end+'" data-next="'+next+'">';
                 break;
             case 'slide-multi':
                 var next = (q.next == undefined) ? true : false;
-                r +=  '<h4 class="text-center mb-3">'+q.name+'</h4>';
                 for(const k in q.fields){
-                    r +='<label for="customRange2">'+ q.fields[k].name +'</label>'
+                    r +='<label>'+ q.fields[k].name +'</label>'
                     + '<input type="range" class="custom-range" min="'+ q.fields[k].init +'" max="'+q.fields[k].end+'" data-next="'+next+'">';
                 }
                 break;
             case 'radio':
-                r +=  '<h4 class="text-center mb-3">'+q.name+'</h4>';
                 for(const k in q.options){
                     var next = (q.next == undefined) ? true : false;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img">' : '';
@@ -65,47 +64,20 @@ $(() => {
                 for(const k in q.options){
                     var next = (q.next == undefined) ? true : false;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img m-4 p-4">' : '';
-                    o += '<div class="row"><div class="col"><div class="form-check form-check-inline d-flex flex-sm-column">'
+                    o += '<div class="col-12 col-lg-6"><div class="form-check form-check-inline d-flex flex-column">'
                     + img
                     +'<input class="form-check-input" type="checkbox" name="' + q.nameForm + '[]" value="'+ q.options[k].id +'" data-next="'+next+'">'
                     +'<label class="form-check-label h4">'+q.options[k].value+'</label>'
-                    +'</div></div></div>';
+                    +'</div></div>';
                 }
-                r = o;
+                r += '<div class="row">'+o+'</div>';
                 break;
             default:
                 break;
         }
         return {r: r, next: next};
     }
-
-    /*function addForm(form){
-        var f = form.formulario;
-        for (const k in f) {
-            var type = f[k].type;
-            console.log(type);
-            switch (type) {
-                case 'select':
-                    console.log('s');
-                    break;
-                case 'slide':
-                    console.log('sl');
-                    break;
-                case 'slide-multi':
-                    console.log('sl-m');
-                    break;
-                case 'checkbox':
-                    console.log('check');
-                    break;
-                case 'checkbox-multi':
-                    console.log('check-mul');
-                    break;
-                default:
-                    break;
-            }
-            console.log(f[k]);
-        }
-    }*/
+    
     $('body').on('click','#next', function(){
         position = position + 1;
         setQuestion();

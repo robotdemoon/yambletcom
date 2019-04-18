@@ -25,8 +25,10 @@
                         <div id="container">
 
                         </div>
-                        <div class="text-center mt-4">
-                            <input type="button" class="btn btn-primary btn-xs next" value="Siguiente" id="next">
+                        <div class="row mt-4">
+                            <div class="col">
+                                <input type="button" class="btn btn-primary btn-xs next float-right" value="Siguiente" id="next">
+                            </div>
                         </div>
                     </div>
                 </div>
