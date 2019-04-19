@@ -16,7 +16,8 @@
             "type":"files",
             "name":"Sube algunos archivos",
             "nameForm": "filesUpload",
-            "next": true
+            "next": true,
+            "total":3
         },
         {
             "type":"text",

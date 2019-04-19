@@ -8,6 +8,7 @@ $(() => {
 
     $.getJSON("./logo.json", function(form) {
         formulario = form;
+        console.log(formulario.formulario.length);
         setQuestion();
         //console.log(formulario.formulario[position].type);
     });
@@ -22,7 +23,7 @@ $(() => {
         var r = '';
         var o = '';
         var next = true;
-        r +=  '<h4 class="text-center mb-3 ymb-mainTitle pb-2">'+q.name+'</h4>';
+        r +=  '<h4 class="text-center mb-3 ymb-mainTitle pb-2 pr-5 pl-5">'+q.name+'</h4>';
         switch (q.type) {
             case 'select':
                 var next = (q.next == undefined) ? true : false;
@@ -80,13 +81,15 @@ $(() => {
                 +'</div></div></div>';
                 break;
             case 'files':
-                r +='<div class="row"><div class="col-11 m-auto"><div class="input-group mb-3">'
-                +'<div class="input-group-prepend">'
-                +'<span class="input-group-text">Subir</span></div>'
-                +'<div class="custom-file">'
-                +'<input type="file" class="custom-file-input" name="'+q.nameForm+'[]" multiple>'
-                +'<label class="custom-file-label">'+q.name+'</label>'
-                +'</div></div></div></div>';
+                for (let i = 0; i < q.total; i++) {
+                    r +='<div class="row"><div class="col-11 m-auto"><div class="input-group mb-3">'
+                    +'<div class="input-group-prepend">'
+                    +'<span class="input-group-text">Subir</span></div>'
+                    +'<div class="custom-file">'
+                    +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'">'
+                    +'<label class="custom-file-label">'+q.name+'</label>'
+                    +'</div></div></div></div>';
+                }
                 break;
             default:
                 break;
@@ -97,6 +100,9 @@ $(() => {
     $('body').on('click','#next', function(){
         position = position + 1;
         setQuestion();
+        var width = (position / formulario.formulario.length ) * 100;
+        console.log(width);
+        $("#formulario-progress-bar").css('width', width + '%')
         console.log('hola');
         //console.log(document.forms.quiz.field);
         //console.log(formulario, position, current);
