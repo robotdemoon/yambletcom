@@ -113,7 +113,8 @@
         },
         {
             "type":"only-button",
-            "name":"Finalizar"
+            "name":"Finalizar",
+            "action": "send"
         }
     ]
 }

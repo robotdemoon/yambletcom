@@ -20,7 +20,7 @@
         <script src="quiz.js"></script>
     </head>
     <body>
-        <form name="quiz" action="send.php" method="POST">
+        <form name="quiz" action="send.php" method="POST" id="logoForm">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-lg-6 m-auto">
