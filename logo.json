@@ -40,7 +40,7 @@
                 {"id": 3, "size": 6, "value":"Rosas"},
                 {"id": 4, "size": 6, "value":"Rojos"},
                 {"id": 5, "size": 6, "value":"Blancos"},
-                {"id": 6, "size": 6, "value":"Naranajas"},
+                {"id": 6, "size": 6, "value":"Naranjas"},
                 {"id": 7, "size": 6, "value":"Amarillos"},
                 {"id": 8, "size": 6, "value":"Marrones"},
                 {"id": 9, "size": 6, "value":"Negros"},
@@ -213,7 +213,8 @@
         {
             "type":"only-button",
             "name":"Finalizar",
-            "action": "send"
+            "action": "send",
+            "typeBtn":"submit"
         }
     ]
 }

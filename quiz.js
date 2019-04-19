@@ -148,7 +148,7 @@ $(() => {
                 }
                 break;
             case 'only-button':
-                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+' class="btn btn-success text-light btn-lg pl-5 pr-5" id="btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
+                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+'  '+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5" id="btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
                 var next = true;
@@ -163,7 +163,7 @@ $(() => {
                     +'</div></div></div>';
                     jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].nameForm, question: q.name, answer:  ''}
                 }
-                r = r + o;//+ r;
+                r = r + o;
                 break;
             default:
                 break;
@@ -259,5 +259,16 @@ $(() => {
 
     $( "body" ).on( "submit", "#logoForm" ,function( event ) {
         event.preventDefault();
+        data = $('#logoForm').serializeArray();
+        jsonSend = JSON.stringify(jsontoSave);
+        data.push({name: 'requerimientos', value: jsonSend});
+        $.ajax({
+            type: "POST",
+            url: "http://165.22.133.122/public/index.php/api/choosePaymentMethod",
+            data: data,
+            success: function(msg){
+              console.log(msg);
+            }
+         });
     });
 })
