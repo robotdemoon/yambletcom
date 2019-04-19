@@ -22,6 +22,17 @@ body {
     align-items: center;
     justify-content: space-between;
 }
+.ymb-conekta{
+    min-width: 320px;
+    width: 80%;
+    max-width: 500px;
+    min-height: 320px;
+    background: white;
+    padding: 1rem 0.2rem;
+    box-shadow: 1px 1px 6px 6px rgba(0,0,0,0.05);
+    margin: 4rem auto;
+    border-radius: 5px;
+}
 .ymb-quiz> div#container{
     width: 100%;
 }
