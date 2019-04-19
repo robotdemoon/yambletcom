@@ -177,7 +177,13 @@ $(() => {
         $('#next').show();
         if(action == 'next'){
             showHide();
-            $("#next").prop('disabled', true);
+            console.log(jsontoSave, jsontoSave[position]);
+            if((jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != '' && jsontoSave[position].answer != undefined) || jsontoSave[position].length != undefined))){
+                $("#next").prop('disabled', false);
+            }else{
+                $("#next").prop('disabled', true);
+            }
+            
         }else{
             showHide('back');
             $("#next").prop('disabled', false);
@@ -211,7 +217,7 @@ $(() => {
             }
             
         }
-
+        
         if($(this).attr('data-next') != undefined){
             //Mandar a la pantalla siguiente
             if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
