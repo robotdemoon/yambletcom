@@ -24,7 +24,8 @@ $(() => {
     }
 
     function showHide(action = 'next'){
-        $('#container > div').hide();
+        $('#container > div').slideUp(((position == 0) ? 0 : 750));
+        
         if(action == 'next'){
             position++;
             position = (position  >= total) ? total: position;
@@ -36,7 +37,7 @@ $(() => {
         }
         var width = (position == total) ? 100 : ( ((position - 2) / (formulario.length - 1)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
-        $('#container > div:nth-child('+ position +')').show();
+        $('#container > div:nth-child('+ position +')').slideDown(1000);
         if(position == total){
             $('#next').hide();
             var s = '';
