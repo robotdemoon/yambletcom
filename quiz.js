@@ -61,8 +61,6 @@ $(() => {
             container.append(s);
             //Mostrar el arreglo de valores
             console.log(jsontoSave);
-            //container.append('<p>hola<p>');
-            //document.forms.quiz.submit();
         }
     }
 
