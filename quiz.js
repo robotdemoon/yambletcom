@@ -7,8 +7,7 @@ $(() => {
     var container = $('#container');
 
     $.getJSON("./logo.json", function(form) {
-        formulario = form;
-        //setQuestion();
+        formulario = form.formulario;
         generateForm();
     });
 
@@ -20,10 +19,8 @@ $(() => {
     function generateForm(){
         var currentForm = ''
         var pos = position;
-        for (const k in formulario.formulario) {
+        for (const k in formulario) {
             currentForm += getQuestion(k).r;
-            //console.log(currentForm);
-            //console.log(formulario.formulario, formulario.formulario[k]);
         }
         container.empty().append(currentForm);
         total = $('#container > div').length;
@@ -32,7 +29,7 @@ $(() => {
 
     function showHide(action = 'next'){
         $('#container > div').hide();
-        var width = (position / formulario.formulario.length ) * 100;
+        var width = (position / formulario.length ) * 100;
         $("#formulario-progress-bar").css('width', width + '%');
         if(action == 'next'){
             position++;
@@ -47,7 +44,7 @@ $(() => {
     }
 
     function getQuestion(pos){
-        var q = formulario.formulario[pos];
+        var q = formulario[pos];
         var r = '';
         var o = '';
         var next = true;
@@ -126,18 +123,15 @@ $(() => {
         return {r: r, next: next};
     }
     
-    $('body').on('click','#next', function(){
-        showHide();
-        /*position = position + 1;
-        setQuestion();
-        var width = (position / formulario.formulario.length ) * 100;*/
-        //$("#formulario-progress-bar").css('width', width + '%');
-        //console.log(document.forms.quiz.field);
-        //console.log(formulario, position, current);
-    });
-
-    $('body').on('click','#back', function(){
-        showHide('back');
+    $('body').on('click','#next, #back', function(){
+        var action = $(this).data('action');
+        if(action == 'next'){
+            showHide();
+        }else{
+            showHide('back');
+        }
+        console.log($(this).data('action'));
+        
     });
 })
 
