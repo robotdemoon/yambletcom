@@ -56,7 +56,7 @@ $(() => {
         r +=  '<h4 class="text-center mb-3 ymb-mainTitle pb-2 pr-5 pl-5">'+q.name+'</h4>';
         switch (q.type) {
             case 'select':
-                var next = (q.next == undefined) ? true : false;
+                var next = false;
                 for (const k in q.options) {
                     o += '<option value="' + q.options[k].id + '">' + q.options[k].value+'</option>' 
                 }
@@ -67,7 +67,6 @@ $(() => {
                 +'</select>'
                 +'</div></div></div>';
                 jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.options[0].id  }
-                next = false;
                 break;
             case 'slide':
                 var next = (q.next == undefined) ? true : false;
@@ -76,7 +75,7 @@ $(() => {
                 jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.current  }
                 break;
             case 'slide-multi':
-                var next = (q.next == undefined) ? true : false;
+                var next = true;
                 if(jsontoSave[ (pos * 1) + 1] == undefined){
                     jsontoSave[ (pos * 1) + 1] = [];
                 }
@@ -101,7 +100,7 @@ $(() => {
             case 'checkbox-multi':
                 //No debe tener un valor por defecto
                 for(const k in q.options){
-                    var next = (q.next == undefined) ? true : false;
+                    var next = true;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img m-4 p-4">' : '';
                     o += '<div class="col-11 col-lg-5 m-auto"><div class="form-check form-check-inline d-flex flex-column inputGroup">'
                     + img
@@ -125,7 +124,7 @@ $(() => {
                     +'<div class="input-group-prepend">'
                     +'<span class="input-group-text">Subir</span></div>'
                     +'<div class="custom-file">'
-                    +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'">'
+                    +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'" data-next="true">'
                     +'<label class="custom-file-label">'+q.name+'</label>'
                     +'</div></div></div></div>';
                 }
@@ -134,7 +133,7 @@ $(() => {
                 r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+' class="btn btn-success text-light btn-lg pl-5 pr-5" id="btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
-                var next = (q.next == undefined) ? true : false;
+                var next = true;
                 var o = '';
                 if(jsontoSave[ (pos * 1) + 1] == undefined){
                     jsontoSave[ (pos * 1) + 1] = [];
@@ -163,7 +162,7 @@ $(() => {
             showHide('back');
         }
         console.log($(this).data('action'));
-        
+        $("#next").prop('disabled', true);
     });
 
     $('body').on('click','#btnInit', function(){
@@ -195,7 +194,18 @@ $(() => {
             }
             
         }
-        console.log(jsontoSave);
+
+        console.log($(this).attr('data-next'));
+
+        //Mandar a la pantalla siguiente
+        if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
+            console.log('hola');
+            $("#next").prop('disabled', false).click().prop('disabled',true);
+            //$("#next").click();
+        }else{
+            $("#next").prop('disabled', false);
+        }
+        //console.log(jsontoSave);
         //console.log($(this).val(), $(this).attr("name"), $(this).attr("data-title"));
     })
 
