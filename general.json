@@ -1,0 +1,122 @@
+{
+    "formulario":[
+        {
+            "type":"only-button",
+            "name":"Logo"
+        },
+        {
+            "type":"radio",
+            "name":"Selecciona el estilo de la tipografia",
+            "nameForm": "logoNumber",
+            "options": [
+                {"id": 0, "value":"Prefiero Tipografia Bold"},
+                {"id": 1, "value":"Prefiero Tipografia Medium"},
+                {"id": 2, "value":"Prefiero Tipografia Regular"},
+                {"id": 3, "value":"Prefiero Tipografia Ligth"}
+            ],
+            "next": false
+        },
+        {
+            "type":"files",
+            "name":"Sube algunos archivos",
+            "nameForm": "filesUpload",
+            "next": true,
+            "total":3
+        },
+        {
+            "type":"text",
+            "name": "Agrega un comentario",
+            "nameForm":"comment",
+            "next":true
+        },
+        {
+            "type":"slide-multi",
+            "name":"Selecciona los valores para tu logo",
+            "nameForm":"opcion1form",
+            "fields":[
+                {"id": 0, "name":"Contraste", "init": 0, "end": 3, "current": 2},
+                {"id": 1, "name":"Brillo", "init": 0, "end": 5, "current": 3},
+                {"id": 2, "name":"Calidez", "init": 0, "end": 7, "current": 5},
+                {"id": 3, "name":"Opacidad", "init": 0, "end": 10, "current": 7}
+            ],
+            "next": true
+        },
+        {
+            "type":"slide",
+            "name":"Contraste",
+            "nameForm":"contrasteform",
+            "init": 0,
+            "end": 5,
+            "current": 3,
+            "next": true
+        },
+        {
+            "type": "select",
+            "options": [
+                {"id": 0, "value": "Verde"},
+                {"id": 1, "value": "Amarillo"},
+                {"id": 2, "value": "Azul"}
+            ],
+            "nameForm":"colors",
+            "name": "Seleccion de logo",
+            "next": false
+        },
+        {
+            "type":"slide",
+            "name":"Contraste",
+            "nameForm":"contrasteInit",
+            "init": 0,
+            "end": 3,
+            "current": 2,
+            "next": true
+        },
+        {
+            "type":"checkbox-multi",
+            "name":"Seleccione los logotipos que mas te interesan",
+            "nameForm": "logoCollections",
+            "question": "Que logos Preferirias?",
+            "options": [
+                {"id": 0, "value": "Logos tipo 1","img": "https://www.freelogoservices.com/blog/wp-content/uploads/logo-color_image.jpg"},
+                {"id": 1, "value": "Logos tipo 2","img": "https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/7-types-of-logos.png?auto=format&q=60&fit=max&w=930"},
+                {"id": 2, "value":"Logos tipo 3","img": "https://static.interestingengineering.com/images/uploads/sizes/logos-1_resize_md.jpg"},
+                {"id": 3, "value":"Logos tipo 4","img": "http://www.staffcreativa.pe/blog/wp-content/uploads/01-tips-dise%C3%B1o-logotipos.jpg"}
+            ],
+            "next": true
+        },
+        {
+            "type":"radio",
+            "name":"Agregar Playera $1000+",
+            "nameForm": "playeraQuestion",
+            "options": [
+                {"id": 0, "value":"Si agregar"},
+                {"id": 1, "value":"No agregar"}
+            ],
+            "next": false
+        },
+        {
+            "type":"radio",
+            "name":"Agregar Tarjetas de Presentacion $1000+",
+            "nameForm": "tarjetasPresentacion",
+            "options": [
+                {"id": 0, "value":"Si agregar"},
+                {"id": 1, "value":"No agregar"}
+            ],
+            "next": false
+        },
+        {
+            "type":"text-multi",
+            "name":"Agrega Informacion de Contacto",
+            "fields":[
+                {"id": 0, "label":"Nombre del Usuario", "nameForm":"nickname", "type": "text"},
+                {"id": 0, "label":"Celular", "nameForm":"phone", "type":"text"},
+                {"id": 0, "label":"correo", "nameForm":"email", "type":"email"}
+            ],
+            "next": true
+        },
+        {
+            "type":"only-button",
+            "name":"Finalizar",
+            "action": "send"
+        }
+    ]
+}

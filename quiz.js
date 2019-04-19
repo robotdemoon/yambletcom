@@ -12,11 +12,6 @@ $(() => {
         generateForm();
     });
 
-    /*function setQuestion(){
-        var response = getQuestion();
-        container.empty().append(response.r);
-    }*/
-
     function generateForm(){
         var currentForm = '';
         for (const k in formulario) {
@@ -41,8 +36,8 @@ $(() => {
         var width = (position == total) ? 100 : ( ((position - 2) / (formulario.length - 1)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
         $('#container > div:nth-child('+ position +')').show();
-
         if(position == total){
+            $('#next').hide();
             //Mostrar el arreglo de valores
             console.log(jsontoSave);
             //container.append('<p>hola<p>');
@@ -63,7 +58,7 @@ $(() => {
                     o += '<option value="' + q.options[k].id + '">' + q.options[k].value+'</option>' 
                 }
                 r += '<div clas="row"><div class="col-10 m-auto"><div class="form-group">'
-                +'<label>'+ q.name +'</label>'
+                +'<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'
                 +'<select class="form-control" name="'+q.nameForm+'" data-next="'+next+'" data-title="'+q.name+'">'
                 + o
                 +'</select>'
@@ -90,7 +85,7 @@ $(() => {
             case 'radio':
                 for(const k in q.options){
                     var next = (q.next == undefined) ? true : false;
-                    var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img">' : '';
+                    var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img mb-2">' : '';
                     r += '<div class="row"><div class="col m-2 text-center"><div class="inputGroup">'
                     +'<input type="radio" name="' + q.nameForm + '" id="'+ q.nameForm + q.options[k].id +'" value="'+ q.options[k].value +'" data-title="'+q.name+'" data-next="'+next+'">'
                     + img
@@ -115,7 +110,7 @@ $(() => {
             case 'text':
                 var next = (q.next == undefined) ? true : false;
                 r += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
-                + '<label>'+ q.name +'</label>'
+                + '<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'
                 + '<input type="text" class="form-control" name="'+q.nameForm+'" data-next="'+next+'" data-title="'+q.name+'"></input>'
                 +'</div></div></div></div>';
                 jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  ''}
@@ -127,7 +122,7 @@ $(() => {
                     +'<span class="input-group-text">Subir</span></div>'
                     +'<div class="custom-file">'
                     +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'">'
-                    +'<label class="custom-file-label">'+q.name+'</label>'
+                    +'<label class="custom-file-label">'+((q.label != undefined) ? q.label : q.name)+'</label>'
                     +'</div></div></div></div>';
                 }
                 break;
@@ -158,6 +153,7 @@ $(() => {
     
     $('body').on('click','#next, #back', function(){
         var action = $(this).data('action');
+        $('#next').show();
         if(action == 'next'){
             showHide();
             $("#next").prop('disabled', true);
@@ -171,11 +167,6 @@ $(() => {
         showHide(action = 'next');
         $('.ymb-main-components').removeAttr('hidden');
     })
-
-
-    /*$('body').on('click', '.valid-value  input, .valid-value  select', function(){
-        console.log($(this).val());
-    })*/
 
     $('body').on('change', '.valid-value  input, .valid-value  select', function(){
         let status = true;
@@ -191,11 +182,8 @@ $(() => {
             jsontoSave[position][$(this).attr('data-position')] = data;
             if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'checkbox-multi'){
                 if(!$(this).prop('checked')){
-                    console.log(data, jsontoSave[position])
                     jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
-                    console.log(jsontoSave[position]);
                     if(jsontoSave[position].length <= 0){
-                        //$("#next").prop('disabled', true);
                         status = false;
                     }
                 }
@@ -203,16 +191,12 @@ $(() => {
             
         }
 
-        console.log($(this).attr('data-next'));
         if($(this).attr('data-next') != undefined){
             //Mandar a la pantalla siguiente
             if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
-                console.log('hola');
                 $("#next").prop('disabled', false).click().prop('disabled',true);
-                //$("#next").click();
             }else{
                 if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'text-multi'){
-                    //console.log(jsontoSave[position]);
                     for (const k in jsontoSave[position]) {
                         if (jsontoSave[position][k].answer == '' || jsontoSave[position][k].answer.length < 8) {
                             status = false;
@@ -229,8 +213,6 @@ $(() => {
         }else{
             $("#next").prop('disabled', false);
         }
-        //console.log(jsontoSave);
-        //console.log($(this).val(), $(this).attr("name"), $(this).attr("data-title"));
     })
 
     $('body').on('keypress', '.valid-value  input', function(){
@@ -252,13 +234,9 @@ $(() => {
                 }
             }
         }
-        
-        console.log(jsontoSave);
-        //console.log($(this).val(), $(this).attr("name"), $(this).attr("data-title"));
     })
 
     $( "body" ).on( "submit", "#logoForm" ,function( event ) {
         event.preventDefault();
-        console.log( $( this ) );
     });
 })

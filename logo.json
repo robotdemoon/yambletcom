@@ -6,100 +6,197 @@
         },
         {
             "type":"radio",
-            "name":"Selecciona el estilo de la tipografia",
-            "nameForm": "logoNumber",
+            "name":"Selecciona los diseños con los que identificas a tu marca (No importa la selección que hagas, ésta es una decisión por gusto). *",
+            "nameForm": "disenosIdentificanMarca",
             "options": [
-                {"id": 0, "value":"Prefiero Tipografia Bold"},
-                {"id": 1, "value":"Prefiero Tipografia Medium"},
-                {"id": 2, "value":"Prefiero Tipografia Regular"},
-                {"id": 3, "value":"Prefiero Tipografia Ligth"}
+                {"id": 0, "value":"Te gustaría solo con tipografía (logotipo)", "img": "./images/solotipografia.png"},
+                {"id": 1, "value":"Te gustaría que sólo se formará por medio de un símbolo o icono (Isotipo)", "img": "./images/solosimbolo.png"},
+                {"id": 2, "value":"Te gustaría que tenga tipografía y además un símbolo (Imagotipo)", "img": "./images/tipografia-simbolo.png"},
+                {"id": 3, "value":"Te gustaría que hubiera una fusión entre símbolo y texto inseparables (Isologo)", "img": "./images/simbolo-texto.png"}
             ],
             "next": false
-        },
-        {
-            "type":"files",
-            "name":"Sube algunos archivos",
-            "nameForm": "filesUpload",
-            "next": true,
-            "total":3
-        },
-        {
-            "type":"text",
-            "name": "Agrega un comentario",
-            "nameForm":"comment",
-            "next":true
         },
         {
             "type":"slide-multi",
-            "name":"Selecciona los valores para tu logo",
-            "nameForm":"opcion1form",
+            "name":"Selecciona tu estilo. Elige con qué adjetivos se identifica el estilo de tu marca. *",
+            "nameForm":"adjetivosIdentificanEstilo",
             "fields":[
-                {"id": 0, "name":"Contraste", "init": 0, "end": 3, "current": 2},
-                {"id": 1, "name":"Brillo", "init": 0, "end": 5, "current": 3},
-                {"id": 2, "name":"Calidez", "init": 0, "end": 7, "current": 5},
-                {"id": 3, "name":"Opacidad", "init": 0, "end": 10, "current": 7}
+                {"id": 0, "name":"Futurista", "init": 0, "end": 10, "current": 5},
+                {"id": 1, "name":"Informal", "init": 0, "end": 10, "current": 5},
+                {"id": 2, "name":"Complejo", "init": 0, "end": 10, "current": 5},
+                {"id": 3, "name":"Elegante", "init": 0, "end": 10, "current": 5}
             ],
-            "next": true
-        },
-        {
-            "type":"slide",
-            "name":"Contraste",
-            "nameForm":"contrasteform",
-            "init": 0,
-            "end": 5,
-            "current": 3,
-            "next": true
-        },
-        {
-            "type": "select",
-            "options": [
-                {"id": 0, "value": "Verde"},
-                {"id": 1, "value": "Amarillo"},
-                {"id": 2, "value": "Azul"}
-            ],
-            "nameForm":"colors",
-            "name": "Seleccion de logo",
-            "next": false
-        },
-        {
-            "type":"slide",
-            "name":"Contraste",
-            "nameForm":"contrasteInit",
-            "init": 0,
-            "end": 3,
-            "current": 2,
             "next": true
         },
         {
             "type":"checkbox-multi",
-            "name":"Seleccione los logotipos que mas te interesan",
-            "nameForm": "logoCollections",
-            "question": "Que logos Preferirias?",
+            "name":"Selecciona los colores para tu logotipo",
+            "nameForm": "coloresLogotipo",
+            "question": "Selecciona los colores para tu logotipo *",
             "options": [
-                {"id": 0, "value": "Logos tipo 1","img": "https://www.freelogoservices.com/blog/wp-content/uploads/logo-color_image.jpg"},
-                {"id": 1, "value": "Logos tipo 2","img": "https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/7-types-of-logos.png?auto=format&q=60&fit=max&w=930"},
-                {"id": 2, "value":"Logos tipo 3","img": "https://static.interestingengineering.com/images/uploads/sizes/logos-1_resize_md.jpg"},
-                {"id": 3, "value":"Logos tipo 4","img": "http://www.staffcreativa.pe/blog/wp-content/uploads/01-tips-dise%C3%B1o-logotipos.jpg"}
+                {"id": 0, "value": "Azules"},
+                {"id": 1, "value": "Verdes"},
+                {"id": 2, "value":"Morados"},
+                {"id": 3, "value":"Rosas"},
+                {"id": 4, "value":"Rojos"},
+                {"id": 5, "value":"Blancos"},
+                {"id": 6, "value":"Naranajas"},
+                {"id": 7, "value":"Amarillos"},
+                {"id": 8, "value":"Marrones"},
+                {"id": 9, "value":"Negros"},
+                {"id": 10, "value":"Grises"}
             ],
             "next": true
         },
         {
             "type":"radio",
-            "name":"Agregar Playera $1000+",
-            "nameForm": "playeraQuestion",
+            "name":"¿Cómo prefieres el tono del color seleccionado? *",
+            "nameForm": "colorTono",
             "options": [
-                {"id": 0, "value":"Si agregar"},
-                {"id": 1, "value":"No agregar"}
+                {"id": 0, "value":"Brillantes, fuertes, vibrantes y llamativos"},
+                {"id": 1, "value":"Pasteles, claros, tenues y suaves"}
+            ],
+            "next": false
+        },
+        {
+            "type": "select",
+            "options": [
+                {"id": 0, "value": "Integridad, paz y confianza."},
+                {"id": 1, "value": "Naturalez, frescura y organico."},
+                {"id": 2, "value": "Espiritualidad, creatividad y sabiduria."},
+                {"id": 3, "value": "Delicadeza, romanticismo e inocencia."},
+                {"id": 4, "value": "Dinamismo, calidez y energia."},
+                {"id": 5, "value": "Pureza, tranquilidad y limpieza."},
+                {"id": 6, "value": "Calidez, optimismo y claridad."},
+                {"id": 7, "value": "Juventud, modernidad y diversion."},
+                {"id": 8, "value": "Fortaleza, neutralidad y rustico."},
+                {"id": 9, "value": "Sencillez, balance y calma."},
+                {"id": 10, "value": "Elegancia, formalidad y prestigio."}
+            ],
+            "label": "Elige la mejor opcion",
+            "nameForm":"marcaPalabras",
+            "name": "Selecciona la opción que tenga el conjunto de palabras que se asemeje a lo que buscas transmitir en tu marca. *",
+            "next": false
+        },
+        {
+            "type":"text",
+            "label":"Agrega un requerimiento adicional:",
+            "name": "¿Tienes algún requerimiento específico para el diseño de tu logotipo? Ejemplo: Me gustaría tuviera tipografía clásica, la imagen de un barco, etc. *",
+            "nameForm":"requerimientoAdicional",
+            "next":true
+        },
+        {
+            "type":"text",
+            "label":"Marca:",
+            "name": "Nombre de la marca *",
+            "nameForm":"marcaNombre",
+            "next":true
+        },
+        {
+            "type":"text",
+            "label":"Cuentanos mas:",
+            "name": "Cuéntanos de qué va tu idea de negocio. Ejemplo: Me dedico a la producción y venta de calcetines... *",
+            "nameForm":"acercade",
+            "next":true
+        },
+        {
+            "type":"files",
+            "label":"Sube un boceto o archivo",
+            "name":"Sube un archivo con algún boceto que hayas hecho o algún logo que conozcas que te gustaría que usemos para inspirarnos. Cualquier información extra que puedas proporcionar es de gran ayuda para el diseño de tu logo.",
+            "nameForm": "filesUpload",
+            "next": true,
+            "total":3
+        },
+        {
+            "type": "select",
+            "options": [
+                {"id": 0, "value": "Abogacía y derecho"},
+                {"id": 1, "value": "Agencia de publicidad"},
+                {"id": 2, "value": "Agencia de viajes"},
+                {"id": 3, "value": "Agricultura"},
+                {"id": 4, "value": "Alimentos y bebidas"},
+                {"id": 5, "value": "Animales y mascotas"},
+                {"id": 6, "value": "Arquitectura"},
+                {"id": 7, "value": "Arte y diseño"},
+                {"id": 8, "value": "Automotriz"},
+                {"id": 9, "value": "Bar o club nocturno"},
+                {"id": 10, "value": "Bienes raíces"},
+                {"id": 11, "value": "Cafeterías"},
+                {"id": 12, "value": "Calzado"},
+                {"id": 13, "value": "Citas y romance"},
+                {"id": 14, "value": "Computación"},
+                {"id": 15, "value": "Construcción"},
+                {"id": 16, "value": "Contabilidad y finanzas"},
+                {"id": 17, "value": "Cosmética y belleza"},
+                {"id": 18, "value": "Cuidado infantil"},
+                {"id": 19, "value": "Deportes"},
+                {"id": 20, "value": "Educación"},
+                {"id": 21, "value": "Electrónica"},
+                {"id": 22, "value": "Entretenimiento"},
+                {"id": 23, "value": "Estéticas"},
+                {"id": 24, "value": "Eventos sociales"},
+                {"id": 25, "value": "Farmaceútica"},
+                {"id": 26, "value": "Ferretería"},
+                {"id": 27, "value": "Florería "},
+                {"id": 28, "value": "Gastronomía"},
+                {"id": 29, "value": "Hogar  "},
+                {"id": 30, "value": "Jardinería"},
+                {"id": 31, "value": "Joyería "},
+                {"id": 32, "value": "Juguetería"},
+                {"id": 33, "value": "Librería"},
+                {"id": 34, "value": "Limpieza y mantenimiento"},
+                {"id": 35, "value": "Marketing"},
+                {"id": 36, "value": "Medicina"},
+                {"id": 37, "value": "Medios de comunicación"},
+                {"id": 38, "value": "Medio ambiente"},
+                {"id": 39, "value": "Mobiliarias"},
+                {"id": 40, "value": "Moda"},
+                {"id": 41, "value": "Música"},
+                {"id": 42, "value": "Negocios y consultoría"},
+                {"id": 43, "value": "Organización no gubernamental"},
+                {"id": 44, "value": "Panadería y repostería"},
+                {"id": 45, "value": "Ropa"},
+                {"id": 46, "value": "Restaurantes"},
+                {"id": 47, "value": "Salud y bienestar"},
+                {"id": 48, "value": "Seguros"},
+                {"id": 49, "value": "Software"},
+                {"id": 50, "value": "Tecnología"},
+                {"id": 51, "value": "Telecomunicaciones"},
+                {"id": 52, "value": "Transporte "},
+                {"id": 53, "value": "Videojuegos"}
+            ],
+            "label": "Categoria/Industria del negocio:",
+            "nameForm":"categoriaNegocio",
+            "name": "Selecciona a qué categoría/ industria pertenece tu negocio *",
+            "next": false
+        },
+        {
+            "type":"radio",
+            "name":"Enviarme una copia de mis Respuestas.",
+            "nameForm": "copiaRespuestasCliente",
+            "options": [
+                {"id": 0, "value":"Si"},
+                {"id": 1, "value":"No"}
+            ],
+            "next": false
+        },
+        {
+            "type":"radio",
+            "name":"Agregar Playera $1000+",
+            "nameForm": "playeraAgregar",
+            "options": [
+                {"id": 0, "value":"Si"},
+                {"id": 1, "value":"No"}
             ],
             "next": false
         },
         {
             "type":"radio",
             "name":"Agregar Tarjetas de Presentacion $1000+",
-            "nameForm": "tarjetasPresentacion",
+            "nameForm": "tarjetasPresentacionAgregar",
             "options": [
-                {"id": 0, "value":"Si agregar"},
-                {"id": 1, "value":"No agregar"}
+                {"id": 0, "value":"Si"},
+                {"id": 1, "value":"No"}
             ],
             "next": false
         },

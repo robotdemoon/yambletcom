@@ -3,7 +3,7 @@ body {
     font-family: "Fira Sans", sans-serif;
 }
 .ymb-img{
-    height: 150px;
+    max-width: 300px;
     border-radius: 5px;
     box-shadow: 1px 1px 1px 3px rgba(0,0,0,0.05);
 }
