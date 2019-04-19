@@ -205,8 +205,8 @@
             "name":"Agrega Informacion de Contacto",
             "fields":[
                 {"id": 0, "label":"Nombre del Usuario", "nameForm":"nickname", "type": "text"},
-                {"id": 0, "label":"Celular", "nameForm":"phone", "type":"text"},
-                {"id": 0, "label":"correo", "nameForm":"email", "type":"email"}
+                {"id": 1, "label":"Celular", "nameForm":"phone", "type":"number"},
+                {"id": 2, "label":"Correo", "nameForm":"email", "type":"email"}
             ],
             "next": true
         },

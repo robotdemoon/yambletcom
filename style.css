@@ -41,3 +41,11 @@ body {
 .ymb-minHeight{
     min-height: 320px;
 }
+.ymb-resume{
+    text-align: center;
+    margin: 1rem auto;
+    width: 95%;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 0.5rem;
+    overflow: hidden;
+}

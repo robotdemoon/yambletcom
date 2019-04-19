@@ -6,8 +6,10 @@ $(() => {
     var total = 0;
     var container = $('#container');
     var jsontoSave = [];
-
-    $.getJSON("./logo.json", function(form) {
+    var nameJson = ($('.loadForm').attr('data-file') == undefined) ? 'general': $('.loadForm').attr('data-file');
+    //Buscamos si exite un archivo de carga
+    //($('.loadForm').attr('data-file'))
+    $.getJSON('./' + nameJson + '.json', function(form) {
         formulario = form.formulario;
         generateForm();
     });
@@ -38,6 +40,26 @@ $(() => {
         $('#container > div:nth-child('+ position +')').show();
         if(position == total){
             $('#next').hide();
+            var s = '';
+            for (const k in jsontoSave) {
+                var title = '';
+                var ss = ''; 
+                if(jsontoSave[k].length){
+                    
+                    for (const kk in jsontoSave[k]) {
+                        title = '<h5>'+jsontoSave[k][kk].question + '(' + jsontoSave[k][kk].name + ')</h5>';
+                        ss += '<div class="row ymb-resume"><div class="col-12">' + title +  '<p>'+jsontoSave[k][kk].answer+'</p>' + '</div></div>';  
+                    }
+                    s += ss;
+                }else{
+                    title = '<h5>'+jsontoSave[k].question +'</h5>';
+                    ss += '<p>'+jsontoSave[k].answer+'</p>' 
+                    s += '<div class="row ymb-resume"><div class="col-12">' + title + ss + '</div></div>';
+                }
+            }
+            s =' <div class="row"><div class="col-12"><h4 class="ymb-mainTitle text-center pb-3">Resumen</h4></div></div>' +  s;
+            //Agregamos el Resumen
+            container.append(s);
             //Mostrar el arreglo de valores
             console.log(jsontoSave);
             //container.append('<p>hola<p>');
@@ -55,7 +77,7 @@ $(() => {
             case 'select':
                 var next = false;
                 for (const k in q.options) {
-                    o += '<option value="' + q.options[k].id + '">' + q.options[k].value+'</option>' 
+                    o += '<option value="' + q.options[k].value + '">' + q.options[k].value+'</option>' 
                 }
                 r += '<div clas="row"><div class="col-10 m-auto"><div class="form-group">'
                 +'<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'

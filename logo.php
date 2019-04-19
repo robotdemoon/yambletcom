@@ -19,7 +19,7 @@
         <script src="quiz.js"></script>
     </head>
     <body>
-        <form name="quiz" action="send.php" method="POST" id="logoForm">
+        <form name="quiz" action="send.php" method="POST" id="logoForm" class="loadForm" data-file="logo">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6 m-auto">
