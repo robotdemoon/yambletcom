@@ -8,7 +8,6 @@ $(() => {
     var jsontoSave = [];
     var nameJson = ($('.loadForm').attr('data-file') == undefined) ? 'general': $('.loadForm').attr('data-file');
     //Buscamos si exite un archivo de carga
-    //($('.loadForm').attr('data-file'))
     $.getJSON('./' + nameJson + '.json', function(form) {
         formulario = form.formulario;
         generateForm();
@@ -120,14 +119,14 @@ $(() => {
                 //No debe tener un valor por defecto
                 for(const k in q.options){
                     var next = true;
-                    var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img m-4 p-4">' : '';
-                    o += '<div class="col-11 col-lg-5 m-auto"><div class="form-check form-check-inline d-flex flex-column inputGroup">'
+                    var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img mb-2">' : '';
+                    o += '<div class="col'+((q.options[k].size != undefined) ? '-'+ q.options[k].size: ' m-2 ')+' text-center"><div class="form-check form-check-inline d-flex flex-column inputGroup">'
                     + img
                     +'<input type="checkbox" id="'+ q.nameForm + q.options[k].id +'" name="' + q.nameForm + '[]" value="'+ q.options[k].id +'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position='+k+' data-type="checkbox-multi">'
                     +'<label for="'+ q.nameForm + q.options[k].id +'">'+q.options[k].value+'</label>'
                     +'</div></div>';
                 }
-                r += '<div class="row">'+o+'</div>';
+                r += '<div class="row '+((q.options[0].size != undefined) ? ' m-auto ymb-width-90 text-center': '')+'">'+o+'</div>';
                 break;
             case 'text':
                 var next = (q.next == undefined) ? true : false;

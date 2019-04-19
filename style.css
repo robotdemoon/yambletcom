@@ -32,6 +32,9 @@ body {
 .ymb-width-full{
     width: 100%;
 }
+.ymb-width-90{
+    width: 90%;
+}
 .ymb-button-back{
     position: absolute;
     left: 0.3rem;
