@@ -177,7 +177,6 @@ $(() => {
         $('#next').show();
         if(action == 'next'){
             showHide();
-            console.log(jsontoSave, jsontoSave[position]);
             if((jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != '' && jsontoSave[position].answer != undefined) || jsontoSave[position].length != undefined))){
                 $("#next").prop('disabled', false);
             }else{
