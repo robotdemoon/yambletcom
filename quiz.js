@@ -130,7 +130,7 @@ $(() => {
                 for (const k in q.fields) {
                     o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                     + '<label>'+ q.fields[k].label +'</label>'
-                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title="'+q.name+'"></input>'
+                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position="'+k+'"></input>'
                     +'</div></div></div>';
                 }
                 r = r + o;//+ r;
