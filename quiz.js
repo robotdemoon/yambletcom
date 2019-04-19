@@ -43,6 +43,9 @@ $(() => {
         $('#container > div:nth-child('+ position +')').show();
 
         if(position == total){
+            //Mostrar el arreglo de valores
+            console.log(jsontoSave);
+            //container.append('<p>hola<p>');
             //document.forms.quiz.submit();
         }
     }
