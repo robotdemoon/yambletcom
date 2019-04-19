@@ -37,3 +37,7 @@ body {
     left: 0.3rem;
     top: 0.3rem;
 }
+
+.ymb-minHeight{
+    min-height: 320px;
+}

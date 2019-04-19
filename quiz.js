@@ -5,20 +5,20 @@ $(() => {
     var position = 0;
     var total = 0;
     var container = $('#container');
+    var jsontoSave = {};
 
     $.getJSON("./logo.json", function(form) {
         formulario = form.formulario;
         generateForm();
     });
 
-    function setQuestion(){
+    /*function setQuestion(){
         var response = getQuestion();
         container.empty().append(response.r);
-    }
+    }*/
 
     function generateForm(){
-        var currentForm = ''
-        var pos = position;
+        var currentForm = '';
         for (const k in formulario) {
             currentForm += getQuestion(k).r;
         }
@@ -29,18 +29,23 @@ $(() => {
 
     function showHide(action = 'next'){
         $('#container > div').hide();
-        var width = (position / formulario.length ) * 100;
-        $("#formulario-progress-bar").css('width', width + '%');
         if(action == 'next'){
             position++;
             position = (position  >= total) ? total: position;
         }else if(action == 'back'){
             position--;
-            position = (position < 1) ? 1 : position;
+            position = (position < 2) ? 2 : position;
         }else{
             position = 0;
         }
+        var width = ((position - 2) / (formulario.length - 1)) * 100;
+        $("#formulario-progress-bar").css('width', width + '%');
+        console.log(position);
         $('#container > div:nth-child('+ position +')').show();
+
+        if(position == total){
+            //document.forms.quiz.submit();
+        }
     }
 
     function getQuestion(pos){
@@ -116,6 +121,20 @@ $(() => {
                     +'</div></div></div></div>';
                 }
                 break;
+            case 'only-button':
+                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><a class="btn btn-success text-light btn-lg pl-5 pr-5" id="btnInit">'+ q.name + '</a></div></div>';
+                break;
+            case 'text-multi':
+                var next = (q.next == undefined) ? true : false;
+                var o = '';
+                for (const k in q.fields) {
+                    o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
+                    + '<label>'+ q.fields[k].label +'</label>'
+                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'"></input>'
+                    +'</div></div></div>';
+                }
+                r = r + o;//+ r;
+                break;
             default:
                 break;
         }
@@ -133,5 +152,11 @@ $(() => {
         console.log($(this).data('action'));
         
     });
+
+    $('body').on('click','#btnInit', function(){
+        showHide(action = 'next');
+        $('.ymb-main-components').removeAttr('hidden');
+    })
+
 })
 

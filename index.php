@@ -20,18 +20,18 @@
         <script src="quiz.js"></script>
     </head>
     <body>
-        <!--<form name="quiz" action="send.php" method="POST">-->
+        <form name="quiz" action="send.php" method="POST">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-lg-6 m-auto">
                     <div class="ymb-quiz position-relative">
-                        <a href="#" class="btn btn-light ymb-button-back" id="back" data-action="back" style="z-index: 2"><i class="fas fa-long-arrow-alt-left"></i></a>
+                        <a href="#" class="btn btn-light ymb-button-back ymb-main-components" id="back" data-action="back" style="z-index: 2" hidden><i class="fas fa-long-arrow-alt-left"></i></a>
                         <div id="container"></div>
                         <div class="row mt-4 ymb-width-full">
                             <div class="col-xs-12 col-lg-12 text-center">
-                                <input type="button" class="btn btn-primary btn-xs next m-auto" value="Siguiente" id="next" data-action="next">
+                                <input type="button" class="btn btn-primary btn-xs next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" hidden>
                             </div>
-                            <div class="col-xs-12 col-lg-12 mt-4">
+                            <div class="col-xs-12 col-lg-12 mt-4 ymb-main-components" id="progress-bar-container" hidden>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 0%" id="formulario-progress-bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>    
@@ -41,8 +41,8 @@
                 </div>
             </div>
         </div>
-        <!--<input type="submit" class="btn btn-primary">
-        </form>-->
+        <!--<input type="submit" class="btn btn-primary">-->
+        </form>
         
         <!--<div class="container">
             <form name="quiz" action="send.php" method="POST">
