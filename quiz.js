@@ -38,9 +38,8 @@ $(() => {
         }else{
             position = 0;
         }
-        var width = ((position - 2) / (formulario.length - 1)) * 100;
+        var width = (position == total) ? 100 : ( ((position - 2) / (formulario.length - 1)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
-        console.log(position);
         $('#container > div:nth-child('+ position +')').show();
 
         if(position == total){
@@ -124,7 +123,7 @@ $(() => {
                     +'<div class="input-group-prepend">'
                     +'<span class="input-group-text">Subir</span></div>'
                     +'<div class="custom-file">'
-                    +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'" data-next="true">'
+                    +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'">'
                     +'<label class="custom-file-label">'+q.name+'</label>'
                     +'</div></div></div></div>';
                 }
@@ -141,7 +140,7 @@ $(() => {
                 for (const k in q.fields) {
                     o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                     + '<label>'+ q.fields[k].label +'</label>'
-                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position="'+k+'"></input>'
+                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position="'+k+'" data-type="text-multi"></input>'
                     +'</div></div></div>';
                     jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].nameForm, question: q.name, answer:  ''}
                 }
@@ -158,11 +157,11 @@ $(() => {
         var action = $(this).data('action');
         if(action == 'next'){
             showHide();
+            $("#next").prop('disabled', true);
         }else{
             showHide('back');
+            $("#next").prop('disabled', false);
         }
-        console.log($(this).data('action'));
-        $("#next").prop('disabled', true);
     });
 
     $('body').on('click','#btnInit', function(){
@@ -176,6 +175,7 @@ $(() => {
     })*/
 
     $('body').on('change', '.valid-value  input, .valid-value  select', function(){
+        let status = true;
         if($(this).attr("data-title-multi") == undefined){
             var data = {name: $(this).attr("name"), question: $(this).attr("data-title"), answer: $(this).val() }
             jsontoSave[position] = data;
@@ -190,18 +190,39 @@ $(() => {
                 if(!$(this).prop('checked')){
                     console.log(data, jsontoSave[position])
                     jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
+                    console.log(jsontoSave[position]);
+                    if(jsontoSave[position].length <= 0){
+                        //$("#next").prop('disabled', true);
+                        status = false;
+                    }
                 }
             }
             
         }
 
         console.log($(this).attr('data-next'));
-
-        //Mandar a la pantalla siguiente
-        if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
-            console.log('hola');
-            $("#next").prop('disabled', false).click().prop('disabled',true);
-            //$("#next").click();
+        if($(this).attr('data-next') != undefined){
+            //Mandar a la pantalla siguiente
+            if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
+                console.log('hola');
+                $("#next").prop('disabled', false).click().prop('disabled',true);
+                //$("#next").click();
+            }else{
+                if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'text-multi'){
+                    //console.log(jsontoSave[position]);
+                    for (const k in jsontoSave[position]) {
+                        if (jsontoSave[position][k].answer == '' || jsontoSave[position][k].answer.length < 8) {
+                            status = false;
+                        }
+                    }
+                }
+                if(status){
+                    $("#next").prop('disabled', false);
+                }else{
+                    $("#next").prop('disabled', true);
+                }
+                
+            }
         }else{
             $("#next").prop('disabled', false);
         }
