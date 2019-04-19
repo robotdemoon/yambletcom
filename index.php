@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-xs-12 col-lg-6 m-auto">
                     <div class="ymb-quiz position-relative">
-                        <a href="#" class="btn btn-light ymb-button-back"><i class="fas fa-long-arrow-alt-left"></i></a>
+                        <a href="#" class="btn btn-light ymb-button-back" id="back" style="z-index: 2"><i class="fas fa-long-arrow-alt-left"></i></a>
                         <div id="container"></div>
                         <div class="row mt-4 ymb-width-full">
                             <div class="col-xs-12 col-lg-12 text-center">

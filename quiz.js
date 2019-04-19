@@ -3,23 +3,51 @@
 $(() => {
     var formulario;
     var position = 0;
-    var current = 1;
+    var total = 0;
     var container = $('#container');
 
     $.getJSON("./logo.json", function(form) {
         formulario = form;
-        console.log(formulario.formulario.length);
-        setQuestion();
-        //console.log(formulario.formulario[position].type);
+        //setQuestion();
+        generateForm();
     });
 
     function setQuestion(){
         var response = getQuestion();
-        $('#container').empty().append(response.r);
+        container.empty().append(response.r);
     }
 
-    function getQuestion(){
-        var q = formulario.formulario[position];
+    function generateForm(){
+        var currentForm = ''
+        var pos = position;
+        for (const k in formulario.formulario) {
+            currentForm += getQuestion(k).r;
+            //console.log(currentForm);
+            //console.log(formulario.formulario, formulario.formulario[k]);
+        }
+        container.empty().append(currentForm);
+        total = $('#container > div').length;
+        showHide();
+    }
+
+    function showHide(action = 'next'){
+        $('#container > div').hide();
+        var width = (position / formulario.formulario.length ) * 100;
+        $("#formulario-progress-bar").css('width', width + '%');
+        if(action == 'next'){
+            position++;
+            position = (position  >= total) ? total: position;
+        }else if(action == 'back'){
+            position--;
+            position = (position < 1) ? 1 : position;
+        }else{
+            position = 0;
+        }
+        $('#container > div:nth-child('+ position +')').show();
+    }
+
+    function getQuestion(pos){
+        var q = formulario.formulario[pos];
         var r = '';
         var o = '';
         var next = true;
@@ -75,10 +103,10 @@ $(() => {
                 break;
             case 'text':
                 var next = (q.next == undefined) ? true : false;
-                r += '<div class="col-11 m-auto"><div class="form-group">'
+                r += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                 + '<label for="exampleInputEmail1">'+ q.name +'</label>'
                 + '<input type="text" class="form-control" name="'+q.nameForm+'" data-next="'+next+'"></input>'
-                +'</div></div></div>';
+                +'</div></div></div></div>';
                 break;
             case 'files':
                 for (let i = 0; i < q.total; i++) {
@@ -94,18 +122,22 @@ $(() => {
             default:
                 break;
         }
+        r = '<div class="row"><div class="col">'+ r +'</div></div>'
         return {r: r, next: next};
     }
     
     $('body').on('click','#next', function(){
-        position = position + 1;
+        showHide();
+        /*position = position + 1;
         setQuestion();
-        var width = (position / formulario.formulario.length ) * 100;
-        console.log(width);
-        $("#formulario-progress-bar").css('width', width + '%')
-        console.log('hola');
+        var width = (position / formulario.formulario.length ) * 100;*/
+        //$("#formulario-progress-bar").css('width', width + '%');
         //console.log(document.forms.quiz.field);
         //console.log(formulario, position, current);
+    });
+
+    $('body').on('click','#back', function(){
+        showHide('back');
     });
 })
 
