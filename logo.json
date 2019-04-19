@@ -13,6 +13,18 @@
             "next": false
         },
         {
+            "type":"files",
+            "name":"Sube algunos archivos",
+            "nameForm": "filesUpload",
+            "next": true
+        },
+        {
+            "type":"text",
+            "name": "Agrega un comentario",
+            "nameForm":"comment",
+            "next":true
+        },
+        {
             "type":"slide-multi",
             "name":"Selecciona los valores para tu logo",
             "nameForm":"opcion1form",
