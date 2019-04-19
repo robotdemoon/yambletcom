@@ -176,10 +176,8 @@ $(() => {
             jsontoSave[position][$(this).attr('data-position')] = data;
             if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'checkbox-multi'){
                 if(!$(this).prop('checked')){
-                    jsontoSave[position] = jsontoSave[position].filter(x  => x !== data);
-                    //jsontoSave[position][$(this).attr('data-position')]
-                    //jsontoSave[position].splice($(this).attr('data-position'), 1);
-                    //jsontoSave[position][$(this).attr('data-position')] = {};
+                    console.log(data, jsontoSave[position])
+                    jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
                 }
             }
             
@@ -202,10 +200,8 @@ $(() => {
 
             if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'checkbox-multi'){
                 if(!$(this).prop('checked')){
-                    jsontoSave[position] = jsontoSave[position].filter( x => x !== data);
-                    //jsontoSave[position][$(this).attr('data-position')]
-                    //jsontoSave[position][$(this).attr('data-position')] = {};
-                    //jsontoSave[position].splice($(this).attr('data-position') - 1, 1);
+                    console.log(data);
+                    jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
                 }
             }
         }
