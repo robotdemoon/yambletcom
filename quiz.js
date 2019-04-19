@@ -66,18 +66,24 @@ $(() => {
                 + o
                 +'</select>'
                 +'</div></div></div>';
+                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.options[0].id  }
                 next = false;
                 break;
             case 'slide':
                 var next = (q.next == undefined) ? true : false;
                 r += '<div clas="row"><div class="col-10 m-auto"><label>'+ q.name +'</label>'
-                + '<input type="range" name="'+q.nameForm+'" class="custom-range" min="'+ q.init +'" max="'+q.end+'" data-next="'+next+'" data-title="'+q.name+'"></div></div>';
+                + '<input type="range" name="'+q.nameForm+'" class="custom-range" min="'+ q.init +'" max="'+q.end+'" value="'+q.current+'" data-next="'+next+'" data-title="'+q.name+'"></div></div>';
+                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.current  }
                 break;
             case 'slide-multi':
                 var next = (q.next == undefined) ? true : false;
+                if(jsontoSave[ (pos * 1) + 1] == undefined){
+                    jsontoSave[ (pos * 1) + 1] = [];
+                }
                 for(const k in q.fields){
                     r +='<div clas="row"><div class="col-10 m-auto"><label>'+ q.fields[k].name +'</label>'
                     + '<input type="range" name="'+q.fields[k].name+'" class="custom-range" min="'+ q.fields[k].init +'" max="'+q.fields[k].end+'" data-next="'+next+'" data-title-multi="'+q.fields[k].name+'" data-position="'+k+'"></div></div>';
+                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].name, question: q.fields[k].name, answer:  q.fields[k].current  }
                 }
                 break;
             case 'radio':
@@ -90,8 +96,10 @@ $(() => {
                     +'<label for="'+ q.nameForm + q.options[k].id +'" >'+q.options[k].value+'</label>'
                     +'</div></div></div>';
                 }
+                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  undefined}
                 break;
             case 'checkbox-multi':
+                //No debe tener un valor por defecto
                 for(const k in q.options){
                     var next = (q.next == undefined) ? true : false;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img m-4 p-4">' : '';
@@ -106,9 +114,10 @@ $(() => {
             case 'text':
                 var next = (q.next == undefined) ? true : false;
                 r += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
-                + '<label for="exampleInputEmail1">'+ q.name +'</label>'
+                + '<label>'+ q.name +'</label>'
                 + '<input type="text" class="form-control" name="'+q.nameForm+'" data-next="'+next+'" data-title="'+q.name+'"></input>'
                 +'</div></div></div></div>';
+                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  ''}
                 break;
             case 'files':
                 for (let i = 0; i < q.total; i++) {
@@ -127,11 +136,15 @@ $(() => {
             case 'text-multi':
                 var next = (q.next == undefined) ? true : false;
                 var o = '';
+                if(jsontoSave[ (pos * 1) + 1] == undefined){
+                    jsontoSave[ (pos * 1) + 1] = [];
+                }
                 for (const k in q.fields) {
                     o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                     + '<label>'+ q.fields[k].label +'</label>'
                     + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position="'+k+'"></input>'
                     +'</div></div></div>';
+                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].nameForm, question: q.name, answer:  ''}
                 }
                 r = r + o;//+ r;
                 break;
