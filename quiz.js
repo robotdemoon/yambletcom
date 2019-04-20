@@ -110,13 +110,14 @@ $(() => {
             case 'radio':
                 for(const k in q.elements){
                     var img = (q.elements[k].img != undefined) ? '<img src="'+ (q.elements[k].img) +'" class="ymb-img mb-2">' : '';
-                    r += '<div class="row"><div class="' + ((q.elements[k].class != undefined)? q.elements[k].class : '') + '">'
+                    o += '<div class="' + ((q.elements[k].class != undefined)? q.elements[k].class : '') + '">'
                     +'<div class="inputGroup">'
                     +'<input type="radio" class="'+ ((q.elements[k].action != undefined) ? q.elements[k].action : '')+'" name="' + q.nameForm + '" id="'+ q.nameForm + k +'" value="'+ q.elements[k].value +'" '+ ((q.elements[k].amount != undefined) ? 'data-amount='+ q.elements[k].amount : '') +'>'
                     + img
                     +'<label for="'+ q.nameForm + k +'" >'+q.elements[k].value + ((q.amount !=undefined) ? ' +$'+q.elements[k].amount:'') + '</label>'
-                    +'</div></div></div>';
+                    +'</div></div>';
                 }
+                r = r + '<div class="row">'+o+'</div>';
                 jsontoSave[ q.nameForm ] =  {name: q.nameForm, question: q.question, value: undefined}
                 break;
             case 'checkbox':
@@ -136,12 +137,12 @@ $(() => {
                 r += '<div class="row">'+ o + '</div>';
                 break;
             case 'text':
-                var next = (q.next == undefined) ? true : false;
-                r += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
+                o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                 + '<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'
                 + '<input type="text" class="form-control" name="'+q.nameForm+'"></input>'
-                +'</div></div></div></div>';
+                +'</div></div></div>';
                 jsontoSave[ q.nameForm ] =  {name: q.nameForm, question: q.question, value:  ''}
+                r = r + o;
                 break;
             case 'files':
                 for (let i = 0; i < q.total; i++) {
@@ -153,7 +154,7 @@ $(() => {
                 }
                 break;
             case 'only-button':
-                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+'  '+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
+                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button ': 'a ')+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit '+((q.action != undefined && q.typeBtn == 'submit') ? q.action: '')+'">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
                 var o = '';
@@ -292,5 +293,29 @@ $(() => {
     $("body").on("click", ".restTotal", function(){
         tp =  (totalTopay * 1 ) - ($(this).attr('data-amount') * 1);
         totalTopay = (tp < generalPay)? generalPay : tp;
+    });
+
+    $( "body" ).on( "click", ".sendForm" ,function() {
+        console.log('sending');
+        event.preventDefault();
+
+        data = $('#logoForm').serializeArray();
+        jsonSend = JSON.stringify(jsontoSave);
+        data.push({name: 'requerimientos', value: jsonSend});
+        data.push({name: 'amount', value: totalTopay});
+        data.push({name: 'concept', value: conceptGeneral});
+        $.ajax({
+            type: "POST",
+            url: "http://165.22.133.122/public/index.php/api/choosePaymentMethod",
+            data: data,
+            success: function(msg){
+              console.log(msg);
+            }
+         });
     })
+
+
+    $( "body" ).on( "submit", "#logoForm" ,function( event ) {
+        event.preventDefault();
+    });
 })
