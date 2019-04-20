@@ -1,27 +1,26 @@
 body {
-    background-color: #d1d7dc;
     font-family: "Fira Sans", sans-serif;
 }
 .ymb-img{
-    max-width: 300px;
+    width: 100%;
+    margin: auto;
     border-radius: 5px;
-    box-shadow: 1px 1px 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 1px 1px 12px 2px rgba(0,0,0,0.15);
 }
-.ymb-quiz{
+/*.ymb-quiz{
     min-width: 320px;
     width: 80%;
     max-width: 500px;
     min-height: 320px;
     background: white;
     padding: 1rem 0.2rem;
-    box-shadow: 1px 1px 6px 6px rgba(0,0,0,0.05);
     margin: 2rem auto;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-}
+}*/
 .ymb-conekta{
     min-width: 320px;
     width: 80%;
@@ -62,4 +61,14 @@ body {
     border: 1px solid rgba(0,0,0,0.15);
     padding: 0.5rem;
     overflow: hidden;
+}
+
+/*
+*  [Progress]
+*/
+.progress{
+    height: 3px !important;
+}
+.custom-file-label::after {
+    content: "Subir"
 }

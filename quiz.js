@@ -77,14 +77,14 @@ $(() => {
         var r = '';
         var o = '';
         var next = true;
-        r +=  '<h4 class="text-center mb-3 ymb-mainTitle pb-2 pr-5 pl-5">'+q.name+'</h4>';
+        r +=  '<h6 class="text-center mb-3 ymb-mainTitle pt-1 pb-2 pr-1 pl-1 font-weight-bolder">'+q.name+'</h6>';
         switch (q.type) {
             case 'select':
                 var next = false;
                 for (const k in q.options) {
                     o += '<option value="' + q.options[k].value + '">' + q.options[k].value+'</option>' 
                 }
-                r += '<div clas="row"><div class="col-10 m-auto"><div class="form-group">'
+                r += '<div clas="row"><div class="col"><div class="form-group">'
                 +'<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'
                 +'<select class="form-control" name="'+q.nameForm+'" data-next="'+next+'" data-title="'+q.name+'">'
                 + o
@@ -104,9 +104,9 @@ $(() => {
                     jsontoSave[ (pos * 1) + 1] = [];
                 }
                 for(const k in q.fields){
-                    r +='<div clas="row"><div class="col-10 m-auto"><label>'+ q.fields[k].name +'</label>'
+                    r +='<div clas="row"><div class="col-12"><label class="d-flex justify-content-between"><span>'+q.fields[k].firstValue+'</span><span>'+q.fields[k].lastValue+'</span></label>'
                     + '<input type="range" name="'+q.fields[k].name+'" class="custom-range" min="'+ q.fields[k].init +'" max="'+q.fields[k].end+'" data-next="'+next+'" data-title-multi="'+q.fields[k].name+'" data-position="'+k+'"></div></div>';
-                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].name, question: q.fields[k].name, answer:  q.fields[k].current  }
+                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].firstValue + '-' +q.fields[k].lastValue, question: q.fields[k].firstValue + '-' +q.fields[k].lastValue, answer:  q.fields[k].current  }
                 }
                 break;
             case 'radio':
@@ -132,7 +132,7 @@ $(() => {
                     +'<label for="'+ q.nameForm + q.options[k].id +'">'+q.options[k].value+'</label>'
                     +'</div></div>';
                 }
-                r += '<div class="row '+((q.options[0].size != undefined) ? ' m-auto ymb-width-90 text-center': '')+'">'+o+'</div>';
+                r += '<div class="row '+((q.options[0].size != undefined) ? ' m-auto text-center': '')+'">'+o+'</div>';
                 break;
             case 'text':
                 var next = (q.next == undefined) ? true : false;
@@ -145,8 +145,6 @@ $(() => {
             case 'files':
                 for (let i = 0; i < q.total; i++) {
                     r +='<div class="row"><div class="col-11 m-auto"><div class="input-group mb-3">'
-                    +'<div class="input-group-prepend">'
-                    +'<span class="input-group-text">Subir</span></div>'
                     +'<div class="custom-file">'
                     +'<input type="file" class="custom-file-input" name="'+q.nameForm+i+'" data-title="'+q.name+'">'
                     +'<label class="custom-file-label">'+((q.label != undefined) ? q.label : q.name)+'</label>'

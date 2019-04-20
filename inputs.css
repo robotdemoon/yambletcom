@@ -5,7 +5,7 @@
     position: relative;
   }
   .inputGroup label {
-    padding: 12px 4rem 12px 0.5rem;
+    padding: 0.75rem 50px 12px 0.75rem;
     width: 100%;
     display: block;
     text-align: left;
@@ -15,15 +15,18 @@
     z-index: 2;
     transition: color 200ms ease-in;
     overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 5px;
+    margin: 1rem auto
   }
   .inputGroup label:before {
-    width: 10px;
+    width: 100%;
     height: 10px;
     border-radius: 50%;
     content: "";
     background-color: #5562eb;
     position: absolute;
-    left: 50%;
+    left: 0%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%) scale3d(1, 1, 1);
             transform: translate(-50%, -50%) scale3d(1, 1, 1);
@@ -43,7 +46,7 @@
     border-radius: 50%;
     z-index: 2;
     position: absolute;
-    right: 30px;
+    right: 10px;
     top: 50%;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);

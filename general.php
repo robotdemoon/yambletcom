@@ -28,7 +28,7 @@
                             <div id="container"></div>
                             <div class="row mt-4 ymb-width-full">
                                 <div class="col-xs-12 col-lg-12 text-center">
-                                    <input type="button" class="btn btn-primary btn-xs next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" hidden disabled>
+                                    <input type="button" class="btn btn-primary btn-lg next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" hidden disabled>
                                 </div>
                                 <div class="col-xs-12 col-lg-12 mt-4 ymb-main-components" id="progress-bar-container" hidden>
                                     <div class="progress">

@@ -17,10 +17,10 @@
             "name":"Selecciona tu estilo. Elige con qué adjetivos se identifica el estilo de tu marca. *",
             "nameForm":"adjetivosIdentificanEstilo",
             "fields":[
-                {"id": 0, "name":"Futurista", "init": 0, "end": 10, "current": 5},
-                {"id": 1, "name":"Informal", "init": 0, "end": 10, "current": 5},
-                {"id": 2, "name":"Complejo", "init": 0, "end": 10, "current": 5},
-                {"id": 3, "name":"Elegante", "init": 0, "end": 10, "current": 5}
+                {"id": 0, "firstValue":"Clasico", "lastValue": "Futurista", "init": 0, "end": 100, "current": 50},
+                {"id": 1, "firstValue":"Formal", "lastValue": "Informal", "init": 0, "end": 100, "current": 50},
+                {"id": 2, "firstValue":"Simple", "lastValue": "Complejo", "init": 0, "end": 100, "current": 50},
+                {"id": 3, "firstValue":"Casual", "lastValue": "Elegante", "init": 0, "end": 100, "current": 50}
             ],
             "next": true
         },
@@ -57,6 +57,7 @@
         {
             "type": "select",
             "options": [
+                {"id": null, "value": "Selecciona una respuesta"},
                 {"id": 0, "value": "Integridad, paz y confianza."},
                 {"id": 1, "value": "Naturalez, frescura y organico."},
                 {"id": 2, "value": "Espiritualidad, creatividad y sabiduria."},
@@ -106,6 +107,7 @@
         {
             "type": "select",
             "options": [
+                {"id": null, "value": "Selecciona una Categoria"},
                 {"id": 0, "value": "Abogacía y derecho"},
                 {"id": 1, "value": "Agencia de publicidad"},
                 {"id": 2, "value": "Agencia de viajes"},

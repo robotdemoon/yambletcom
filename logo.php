@@ -22,19 +22,21 @@
         <form name="quiz" action="send.php" method="POST" id="logoForm" class="loadForm" data-file="logo">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-6 m-auto">
-                        <div class="ymb-quiz position-relative">
-                            <a href="#" class="btn btn-light ymb-button-back ymb-main-components" id="back" data-action="back" style="z-index: 2"><i class="fas fa-long-arrow-alt-left"></i></a>
-                            <div id="container"></div>
-                            <div class="row mt-4 ymb-width-full">
-                                <div class="col-xs-12 col-lg-12 text-center">
-                                    <input type="button" class="btn btn-primary btn-xs next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" disabled>
-                                </div>
-                                <div class="col-xs-12 col-lg-12 mt-4 ymb-main-components" id="progress-bar-container">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 0%" id="formulario-progress-bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>    
-                                </div>
+                    <div class="col-xs-12 col-md-6 col-xl-4 m-auto mt-4 mb-4 pb-4 pt-2">
+                        <div class="row">
+                            <div class="col-12 ymb-main-components" id="progress-bar-container">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="formulario-progress-bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>    
+                            </div>
+                            <div class="col-12">
+                                <button href="#" class="btn btn-light mt-1 ymb-main-components" id="back" data-action="back"><i class="fas fa-long-arrow-alt-left"></i></button>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div id="container"></div>
+                            </div>
+                            <div class="col-11 m-auto">
+                                <input type="button" class="btn btn-primary btn-sm btn-block next ymb-main-components p-1" value="Siguiente" id="next" data-action="next" disabled>
                             </div>
                         </div>
                     </div>
