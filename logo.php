@@ -30,13 +30,13 @@
                                 </div>    
                             </div>
                             <div class="col-12">
-                                <button href="#" class="btn btn-light mt-1 ymb-main-components" id="back" data-action="back"><i class="fas fa-long-arrow-alt-left"></i></button>
+                                <a href="#" class="btn btn-light mt-1 ymb-main-components" id="back" data-action="back"><i class="fas fa-long-arrow-alt-left"></i></a>
                             </div>
                             <div class="col-12 mb-4">
                                 <div id="container"></div>
                             </div>
                             <div class="col-11 m-auto">
-                                <input type="button" class="btn btn-primary btn-sm btn-block next ymb-main-components p-1" value="Siguiente" id="next" data-action="next" disabled>
+                                <input type="button" class="btn btn-primary btn-sm btn-block next ymb-main-components p-1" value="Siguiente" id="next" data-action="next" disabled hidden>
                             </div>
                         </div>
                     </div>

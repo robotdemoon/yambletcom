@@ -29,46 +29,51 @@ $(() => {
 
     function showHide(action = 'next'){
         $('#container > div').slideUp(((position == 0) ? 0 : 750));
-        
         if(action == 'next'){
             position++;
             position = (position  >= total) ? total: position;
+            nextBehavior(formulario[position - 1].next, formulario[position - 1].isOptional);
         }else if(action == 'back'){
             position--;
             position = (position < 1) ? 1 : position;
         }else{
             position = 0;
         }
+        
         var width = (position == total) ? 100 : ( ((position - 1 ) / (formulario.length)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
         $('#container > div:nth-child('+ position +')').slideDown(750);
         if(position == total){
-            $('#next').hide();
+           // $('#next').hide();
+            $('#next').prop('hidden',true);
             var s = '';
-            jsontoSave.push({name: 'amount', question: 'Total a pagar:', answer: totalTopay});
-            jsontoSave.push({name: 'concept', question: 'Concepto a pagar:', answer: conceptGeneral});
+            jsontoSave['amount'] = {question: 'Total a pagar:', value: totalTopay};
+            jsontoSave['concept'] = {question: 'Concepto a pagar:', value: conceptGeneral};
 
             for (const k in jsontoSave) {
                 var title = '';
                 var ss = ''; 
-                if(jsontoSave[k].length){
-                    
-                    for (const kk in jsontoSave[k]) {
-                        title = '<h5>'+jsontoSave[k][kk].question + '(' + jsontoSave[k][kk].name + ')</h5>';
-                        ss += '<div class="row ymb-resume"><div class="col-12">' + title +  '<p>'+jsontoSave[k][kk].answer+'</p>' + '</div></div>';  
+                if(jsontoSave[k].elements != undefined && jsontoSave[k].elements.length > 0){
+                    title = '<h5>'+jsontoSave[k].question +'</h5>';
+                    for (const kk in jsontoSave[k].elements) {
+                        if(jsontoSave[k].elements[kk].name != undefined && jsontoSave[k].elements[kk].value != undefined){
+                            ss += '<p>'+jsontoSave[k].elements[kk].name+':'+jsontoSave[k].elements[kk].value+'</p>'; 
+                        }else{
+                            ss += '<p>'+jsontoSave[k].elements[kk]+' </p>';  
+                        }
                     }
-                    s += ss;
+                    s += '<div class="row ymb-resume"><div class="col-12">' + title +ss + '</div></div>';
                 }else{
                     title = '<h5>'+jsontoSave[k].question +'</h5>';
-                    ss += '<p>'+jsontoSave[k].answer+'</p>' 
+                    ss += '<p>'+jsontoSave[k].value+'</p>' 
                     s += '<div class="row ymb-resume"><div class="col-12">' + title + ss + '</div></div>';
                 }
             }
             s =' <div class="row"><div class="col-12"><h4 class="ymb-mainTitle text-center pb-3">Resumen</h4></div></div>' +  s;
             //Agregamos el Resumen
             container.append(s);
-            //Mostrar el arreglo de valores
-            console.log(jsontoSave);
+        }else{
+            hasValues();
         }
     }
 
@@ -77,7 +82,7 @@ $(() => {
         var r = '';
         var o = '';
         var next = true;
-        r +=  '<h6 class="text-center mb-3 ymb-mainTitle pt-1 pb-2 pr-1 pl-1 font-weight-bolder">'+q.name+'</h6>';
+        r +=  '<h6 class="text-center mb-3 ymb-mainTitle pt-1 pb-2 pr-1 pl-1 font-weight-bolder">'+q.question+'</h6>';
         switch (q.type) {
             case 'select':
                 var next = false;
@@ -90,57 +95,53 @@ $(() => {
                 + o
                 +'</select>'
                 +'</div></div></div>';
-                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.options[0].id  }
+                jsontoSave[ q.nameForm] =  {name: q.nameForm, question: q.question, value: q.options[0].id  }
                 break;
             case 'slide':
-                var next = (q.next == undefined) ? true : false;
-                r += '<div clas="row"><div class="col-10 m-auto"><label>'+ q.name +'</label>'
-                + '<input type="range" name="'+q.nameForm+'" class="custom-range" min="'+ q.init +'" max="'+q.end+'" value="'+q.current+'" data-next="'+next+'" data-title="'+q.name+'"></div></div>';
-                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer: q.current  }
-                break;
-            case 'slide-multi':
-                var next = true;
-                if(jsontoSave[ (pos * 1) + 1] == undefined){
-                    jsontoSave[ (pos * 1) + 1] = [];
+                if(jsontoSave[q.nameForm]  == undefined){
+                    jsontoSave[q.nameForm] = {question: q.question, elements: []};
                 }
                 for(const k in q.fields){
-                    r +='<div clas="row"><div class="col-12"><label class="d-flex justify-content-between"><span>'+q.fields[k].firstValue+'</span><span>'+q.fields[k].lastValue+'</span></label>'
-                    + '<input type="range" name="'+q.fields[k].name+'" class="custom-range" min="'+ q.fields[k].init +'" max="'+q.fields[k].end+'" data-next="'+next+'" data-title-multi="'+q.fields[k].name+'" data-position="'+k+'"></div></div>';
-                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].firstValue + '-' +q.fields[k].lastValue, question: q.fields[k].firstValue + '-' +q.fields[k].lastValue, answer:  q.fields[k].current  }
+                    r +='<div clas="row"><div class="'+ ((q.fields[k].class != undefined)? q.fields[k].class : '') + '"><label class="d-flex justify-content-between"><span>'+q.fields[k].firstValue+'</span><span>'+q.fields[k].lastValue+'</span></label>'
+                    + '<input type="range" name="'+q.nameForm+k+'" data-name-alias="'+q.nameForm+'" class="custom-range" min="'+ q.fields[k].init +'" max="'+q.fields[k].end+'" data-position="'+k+'"></div></div>';
+                    jsontoSave[q.nameForm].elements[k] =  {name: q.fields[k].nameForm,  value:  q.fields[k].value}
                 }
                 break;
             case 'radio':
-                for(const k in q.options){
-                    var next = (q.next == undefined) ? true : false;
-                    var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img mb-2">' : '';
-                    r += '<div class="row"><div class="col m-2 text-center"><div class="inputGroup">'
-                    +'<input type="radio" class="'+((q.options[k].action != undefined) ? q.options[k].action : '')+'" name="' + q.nameForm + '" id="'+ q.nameForm + q.options[k].id +'" value="'+ q.options[k].value +'" data-title="'+q.name+'" data-next="'+next+'" '+ ((q.options[k].amount != undefined) ? 'data-amount='+ q.options[k].amount : '') +'>'
+                for(const k in q.elements){
+                    var img = (q.elements[k].img != undefined) ? '<img src="'+ (q.elements[k].img) +'" class="ymb-img mb-2">' : '';
+                    r += '<div class="row"><div class="' + ((q.elements[k].class != undefined)? q.elements[k].class : '') + '">'
+                    +'<div class="inputGroup">'
+                    +'<input type="radio" class="'+ ((q.elements[k].action != undefined) ? q.elements[k].action : '')+'" name="' + q.nameForm + '" id="'+ q.nameForm + k +'" value="'+ q.elements[k].value +'" '+ ((q.elements[k].amount != undefined) ? 'data-amount='+ q.elements[k].amount : '') +'>'
                     + img
-                    +'<label for="'+ q.nameForm + q.options[k].id +'" >'+q.options[k].value + ((q.amount !=undefined) ? ' +$'+q.options[k].amount:'') + '</label>'
+                    +'<label for="'+ q.nameForm + k +'" >'+q.elements[k].value + ((q.amount !=undefined) ? ' +$'+q.elements[k].amount:'') + '</label>'
                     +'</div></div></div>';
                 }
-                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  undefined}
+                jsontoSave[ q.nameForm ] =  {name: q.nameForm, question: q.question, value: undefined}
                 break;
-            case 'checkbox-multi':
+            case 'checkbox':
+                if(jsontoSave[q.nameForm]  == undefined){
+                    jsontoSave[q.nameForm] = {question: q.question, elements: []};
+                }
                 //No debe tener un valor por defecto
                 for(const k in q.options){
                     var next = true;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img mb-2">' : '';
-                    o += '<div class="col'+((q.options[k].size != undefined) ? '-'+ q.options[k].size: ' m-2 ')+' text-center"><div class="form-check form-check-inline d-flex flex-column inputGroup">'
+                    o += '<div class=" '+((q.options[k].class != undefined) ? q.options[k].class: ' m-2 ')+' text-center"><div class="form-check form-check-inline d-flex flex-column inputGroup">'
                     + img
-                    +'<input type="checkbox" id="'+ q.nameForm + q.options[k].id +'" name="' + q.nameForm + '[]" value="'+ q.options[k].value +'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position='+k+' data-type="checkbox-multi">'
+                    +'<input type="checkbox" id="'+ q.nameForm + q.options[k].id +'" name="' + q.nameForm + '[]" value="'+ q.options[k].value +'" data-position="'+k+'">'
                     +'<label for="'+ q.nameForm + q.options[k].id +'">'+q.options[k].value+'</label>'
                     +'</div></div>';
                 }
-                r += '<div class="row '+((q.options[0].size != undefined) ? ' m-auto text-center': '')+'">'+o+'</div>';
+                r += '<div class="row">'+ o + '</div>';
                 break;
             case 'text':
                 var next = (q.next == undefined) ? true : false;
                 r += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
                 + '<label>'+ ((q.label != undefined) ? q.label : q.name) +'</label>'
-                + '<input type="text" class="form-control" name="'+q.nameForm+'" data-next="'+next+'" data-title="'+q.name+'"></input>'
+                + '<input type="text" class="form-control" name="'+q.nameForm+'"></input>'
                 +'</div></div></div></div>';
-                jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  ''}
+                jsontoSave[ q.nameForm ] =  {name: q.nameForm, question: q.question, value:  ''}
                 break;
             case 'files':
                 for (let i = 0; i < q.total; i++) {
@@ -155,141 +156,133 @@ $(() => {
                 r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+'  '+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
-                var next = true;
                 var o = '';
-                if(jsontoSave[ (pos * 1) + 1] == undefined){
-                    jsontoSave[ (pos * 1) + 1] = [];
+                if(jsontoSave[q.nameForm]  == undefined){
+                    jsontoSave[q.nameForm] = {question: q.question, elements: []};
                 }
                 for (const k in q.fields) {
-                    o += '<div class="row"><div class="col-11 m-auto"><div class="form-group">'
+                    o += '<div class="row"><div class="'+((q.fields[k].class != undefined) ? q.fields[k].class: ' ')+'"><div class="form-group">'
                     + '<label>'+ q.fields[k].label +'</label>'
-                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-next="'+next+'" data-title-multi="'+q.name+'" data-position="'+k+'" data-type="text-multi"></input>'
+                    + '<input type="'+q.fields[k].type+'" class="form-control" name="'+q.fields[k].nameForm+'" data-name-alias="'+q.nameForm+'" data-position="'+k+'"></input>'
                     +'</div></div></div>';
-                    jsontoSave[ (pos * 1) + 1][k] =  {name: q.fields[k].nameForm, question: q.name, answer:  ''}
+                    jsontoSave[q.nameForm].elements[k] =  {name: q.fields[k].nameForm, value: undefined}
                 }
                 r = r + o;
                 break;
             default:
                 break;
         }
-        r = '<div class="row"><div class="col valid-value">'+ r +'</div></div>'
+        r = '<div class="row"><div class="' + ((q.class != undefined) ? q.class: ' col ') + ' valid-value">'+ r +'</div></div>'
         return {r: r, next: next};
     }
     
     $('body').on('click','#next, #back', function(){
-        var action = $(this).data('action');
-        $('#next').show();
-        if(action == 'next'){
-            showHide();
-            if(jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != undefined && jsontoSave[position].answer != '') || jsontoSave[position].length != undefined)){
-                $("#next").prop('disabled', false);
-            }else{
-                $("#next").prop('disabled', true);
-            }
-            
-        }else{
-            showHide('back');
-            $("#next").prop('disabled', false);
-        }
+        var action = $(this).attr('data-action');
+        showHide(action);
     });
-
-    $('body').on('click','.btnInit', function(){
-        showHide('next');
-        $('.ymb-main-components').removeAttr('hidden');
-    })
 
     $('body').on('change', '.valid-value  input, .valid-value  select', function(){
-        let status = true;
-        if($(this).attr("data-title-multi") == undefined){
-            var data = {name: $(this).attr("name"), question: $(this).attr("data-title"), answer: $(this).val() }
-            jsontoSave[position] = data;
-        }else{
-            var data = {name: $(this).attr("name"), question: $(this).attr("data-title-multi"), answer: $(this).val() }
-            if(jsontoSave[position] == undefined){
-                jsontoSave[position] = [];
-            }
-
-            jsontoSave[position][$(this).attr('data-position')] = data;
-            if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'checkbox-multi'){
+        var pos = position - 1;
+        var currentField = formulario[pos];
+        var isMulti = currentField.isMulti;
+        var next = currentField.next;
+        var response;
+        var val = $(this).val();
+        var nameField = (($(this).attr('data-name-alias') != undefined) ? $(this).attr('data-name-alias') : $(this).attr('name'));
+        var validations = {required: false, minlength: 6, maxlength: 60};
+        var optional = (currentField.isOptional != undefined) ? currentField.isOptional : false;
+        nextBehavior(next, optional);
+        if(!isMulti){
+            if(currentField.type == "checkbox"){
                 if(!$(this).prop('checked')){
-                    jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
-                    if(jsontoSave[position].length <= 0){
-                        status = false;
-                    }
-                }
-            }
-            
-        }
-        
-        if($(this).attr('data-next') != undefined){
-            //Mandar a la pantalla siguiente
-            if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
-                $("#next").prop('disabled', false).click();
-                if(jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != undefined && jsontoSave[position].answer != '') || jsontoSave[position].length != undefined)){
-                    $("#next").prop('disabled',false);
+                    jsontoSave[currentField.nameForm].elements = jsontoSave[currentField.nameForm].elements.filter( x => x !== val);
                 }else{
-                    $("#next").prop('disabled',true);
+                    jsontoSave[ currentField.nameForm ].elements.push(val);
                 }
-                
-                //.prop('disabled',true);
+                //Revisamos que tenga valores
+                nextBehavior(true, (((jsontoSave[ currentField.nameForm ].elements.length > 0) ? true : false)));
             }else{
-                if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'text-multi'){
-                    for (const k in jsontoSave[position]) {
-                        if (jsontoSave[position][k].answer == '' || jsontoSave[position][k].answer.length < 8) {
-                            status = false;
-                        }
+                response = {name: currentField.nameForm, question: currentField.question, value: val};
+                jsontoSave[nameField] = response;
+                if(validateField(((currentField.validations != undefined) ? currentField.validations : validations), val)){
+                    if(currentField.type == "radio" || currentField.type == "select"){
+                        nextBehavior(next, optional, true);
+                    }else{
+                        nextBehavior(next, true);
                     }
                 }
-                if(status){
-                    $("#next").prop('disabled', false);
-                }else{
-                    $("#next").prop('disabled', true);
-                }
-                
-            }
-        }else{
-            $("#next").prop('disabled', false);
-        }
-    })
-
-    $('body').on('keypress', '.valid-value  input', function(){
-        if($(this).attr("data-title-multi") == undefined){
-            var data = {name: $(this).attr("name"), question: $(this).attr("data-title"), answer: $(this).val() }
-            jsontoSave[position] = data;
-        }else{
-            var data = {name: $(this).attr("name"), question: $(this).attr("data-title-multi"), answer: $(this).val() }
-            if(jsontoSave[position] == undefined){
-                jsontoSave[position] = [];
             }
             
-            jsontoSave[position][$(this).attr('data-position')] = data;
-
-            if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'checkbox-multi'){
-                if(!$(this).prop('checked')){
-                    console.log(data);
-                    jsontoSave[position] = jsontoSave[position].filter( x => x.answer !== data.answer);
+        }else{
+            currentPosition = $(this).attr('data-position');
+            response = {name: currentField.fields[currentPosition].nameForm, value: val};
+            jsontoSave[nameField].elements[currentPosition] = response; 
+            let statusMulti = true;
+            for (const k in jsontoSave[nameField].elements) {
+                if(jsontoSave[nameField].elements[k].value == undefined){
+                    statusMulti = false;
+                }else if(currentField.fields[k].validations != undefined && validateField(currentField.fields[k].validations, val) == false){
+                    statusMulti = false;
                 }
             }
+            if(statusMulti)
+                nextBehavior(true, statusMulti);
         }
     })
 
-    $( "body" ).on( "submit", "#logoForm" ,function( event ) {
-        event.preventDefault();
 
-        data = $('#logoForm').serializeArray();
-        jsonSend = JSON.stringify(jsontoSave);
-        data.push({name: 'requerimientos', value: jsonSend});
-        data.push({name: 'amount', value: totalTopay});
-        data.push({name: 'concept', value: conceptGeneral});
-        $.ajax({
-            type: "POST",
-            url: "http://165.22.133.122/public/index.php/api/choosePaymentMethod",
-            data: data,
-            success: function(msg){
-              console.log(msg);
+    function validateField(validations, value){
+        state = true;
+        if(validations.required){
+            if(value.length < validations.minlength){  state = false;}
+            if(value.length > validations.maxlength){  state = false;}
+            if(value == ""){  state = false;}
+        }
+        return state;
+    }
+
+    function nextBehavior(next = true, isOptional = false, nextContainer = false){
+        var n = $("#next");
+        n.prop('hidden', ((!next) ? true: false)).prop('disabled', ((!isOptional) ? true : false));
+            
+        if(nextContainer){
+            showHide('next');
+        }
+    }
+
+    function hasValues(){
+        var pos = position - 1;
+        var currentField = formulario[pos];
+        var isMulti = currentField.isMulti;
+        var validations = {required: false, minlength: 6, maxlength: 60};
+        var objeto = jsontoSave[currentField.nameForm]
+        if(!isMulti){
+            if(currentField.type == "checkbox"){
+                nextBehavior(true, (((jsontoSave[ currentField.nameForm ].elements.length > 0) ? true : false)));
+            }else{
+                if(validateField(((currentField.validations != undefined) ? currentField.validations : validations), objeto.value)){
+                    nextBehavior(true, true);
+                }
             }
-         });
-    });
+            
+        }else{
+            let statusMulti = true;
+            if(currentField.type != "files"){
+                for (const k in objeto.elements) {
+                    if(objeto.elements[k].value == undefined){
+                        statusMulti = false;
+                    }
+                }
+                if(statusMulti){
+                    nextBehavior(true, statusMulti);
+                }
+            }
+        }
+    }
+
+    /**
+     * [Metodos Adicionales]
+     */
 
     $("body").on("click", ".topay", function(){
         tp = (totalTopay * 1 ) + ($(this).attr('data-amount') * 1);

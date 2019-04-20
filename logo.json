@@ -2,56 +2,62 @@
     "formulario":[
         {
             "type":"radio",
-            "name":"Selecciona los diseños con los que identificas a tu marca (No importa la selección que hagas, ésta es una decisión por gusto). *",
-            "nameForm": "disenosIdentificanMarca",
-            "options": [
-                {"id": 0, "value":"Te gustaría solo con tipografía (logotipo)", "img": "./images/solotipografia.png"},
-                {"id": 1, "value":"Te gustaría que sólo se formará por medio de un símbolo o icono (Isotipo)", "img": "./images/solosimbolo.png"},
-                {"id": 2, "value":"Te gustaría que tenga tipografía y además un símbolo (Imagotipo)", "img": "./images/tipografia-simbolo.png"},
-                {"id": 3, "value":"Te gustaría que hubiera una fusión entre símbolo y texto inseparables (Isologo)", "img": "./images/simbolo-texto.png"}
+            "question": "Selecciona los diseños con los que identificas a tu marca (No importa la selección que hagas, ésta es una decisión por gusto). *", 
+            "nameForm": "disenosIdentificaMarca",
+            "class": "col",
+            "elements": [
+                {"id": 0, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría solo con tipografía (logotipo)", "img": "./images/solotipografia.png"},
+                {"id": 1, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que sólo se formará por medio de un símbolo o icono (Isotipo)", "img": "./images/solosimbolo.png"},
+                {"id": 2, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que tenga tipografía y además un símbolo (Imagotipo)", "img": "./images/tipografia-simbolo.png"},
+                {"id": 3, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que hubiera una fusión entre símbolo y texto inseparables (Isologo)", "img": "./images/simbolo-texto.png"}
             ],
+            "isMulti": false,
             "next": false
         },
         {
-            "type":"slide-multi",
-            "name":"Selecciona tu estilo. Elige con qué adjetivos se identifica el estilo de tu marca. *",
+            "type":"slide",
+            "question":"Selecciona tu estilo. Elige con qué adjetivos se identifica el estilo de tu marca. *",
             "nameForm":"adjetivosIdentificanEstilo",
+            "class": "col",
             "fields":[
-                {"id": 0, "firstValue":"Clasico", "lastValue": "Futurista", "init": 0, "end": 100, "current": 50},
-                {"id": 1, "firstValue":"Formal", "lastValue": "Informal", "init": 0, "end": 100, "current": 50},
-                {"id": 2, "firstValue":"Simple", "lastValue": "Complejo", "init": 0, "end": 100, "current": 50},
-                {"id": 3, "firstValue":"Casual", "lastValue": "Elegante", "init": 0, "end": 100, "current": 50}
+                {"id": 0, "class": "col-11 m-auto", "nameForm": "clasico-futurista","firstValue":"Clasico", "lastValue": "Futurista", "init": 0, "end": 100, "value": 50},
+                {"id": 1, "class": "col-11 m-auto", "nameForm": "formal-informal","firstValue":"Formal", "lastValue": "Informal", "init": 0, "end": 100, "value": 50},
+                {"id": 2, "class": "col-11 m-auto", "nameForm": "simple-complejo","firstValue":"Simple", "lastValue": "Complejo", "init": 0, "end": 100, "value": 50},
+                {"id": 3, "class": "col-11 m-auto", "nameForm": "casual-elegante","firstValue":"Casual", "lastValue": "Elegante", "init": 0, "end": 100, "value": 50}
             ],
+            "isMulti": true,
             "next": true
         },
         {
-            "type":"checkbox-multi",
-            "name":"Selecciona los colores para tu logotipo",
+            "type":"checkbox",
+            "question":"Selecciona los colores para tu logotipo",
             "nameForm": "coloresLogotipo",
-            "question": "Selecciona los colores para tu logotipo *",
             "options": [
-                {"id": 0, "size": 6, "value": "Azules"},
-                {"id": 1, "size": 6, "value": "Verdes"},
-                {"id": 2, "size": 6, "value":"Morados"},
-                {"id": 3, "size": 6, "value":"Rosas"},
-                {"id": 4, "size": 6, "value":"Rojos"},
-                {"id": 5, "size": 6, "value":"Blancos"},
-                {"id": 6, "size": 6, "value":"Naranjas"},
-                {"id": 7, "size": 6, "value":"Amarillos"},
-                {"id": 8, "size": 6, "value":"Marrones"},
-                {"id": 9, "size": 6, "value":"Negros"},
-                {"id": 10, "size": 6, "value":"Grises"}
+                {"id": 0, "class": "col-6 col-lg-4", "value": "Azules"},
+                {"id": 1, "class": "col-6 col-lg-4", "value": "Verdes"},
+                {"id": 2, "class": "col-6 col-lg-4", "value":"Morados"},
+                {"id": 3, "class": "col-6 col-lg-4", "value":"Rosas"},
+                {"id": 4, "class": "col-6 col-lg-4", "value":"Rojos"},
+                {"id": 5, "class": "col-6 col-lg-4", "value":"Blancos"},
+                {"id": 6, "class": "col-6 col-lg-4", "value":"Naranjas"},
+                {"id": 7, "class": "col-6 col-lg-4", "value":"Amarillos"},
+                {"id": 8, "class": "col-6 col-lg-4", "value":"Marrones"},
+                {"id": 9, "class": "col-6 col-lg-4", "value":"Negros"},
+                {"id": 10, "class": "col-6 col-lg-4", "value":"Grises"}
             ],
-            "next": true
+            "isMulti": false,
+            "next": true,
+            "isOptional": false
         },
         {
             "type":"radio",
-            "name":"¿Cómo prefieres el tono del color seleccionado? *",
+            "question":"¿Cómo prefieres el tono del color seleccionado? *",
             "nameForm": "colorTono",
-            "options": [
-                {"id": 0, "value":"Brillantes, fuertes, vibrantes y llamativos"},
-                {"id": 1, "value":"Pasteles, claros, tenues y suaves"}
+            "elements": [
+                {"id": 0, "class": "col-12 m-auto", "value":"Brillantes, fuertes, vibrantes y llamativos"},
+                {"id": 1, "class": "col-12 m-auto", "value":"Pasteles, claros, tenues y suaves"}
             ],
+            "isMulti": false,
             "next": false
         },
         {
@@ -72,37 +78,57 @@
             ],
             "label": "Elige la mejor opcion",
             "nameForm":"marcaPalabras",
-            "name": "Selecciona la opción que tenga el conjunto de palabras que se asemeje a lo que buscas transmitir en tu marca. *",
+            "question": "Selecciona la opción que tenga el conjunto de palabras que se asemeje a lo que buscas transmitir en tu marca. *",
+            "isMulti": false,
+            "isOptional":false,
             "next": false
         },
         {
             "type":"text",
             "label":"Agrega un requerimiento adicional:",
-            "name": "¿Tienes algún requerimiento específico para el diseño de tu logotipo? Ejemplo: Me gustaría tuviera tipografía clásica, la imagen de un barco, etc. *",
+            "question": "¿Tienes algún requerimiento específico para el diseño de tu logotipo? Ejemplo: Me gustaría tuviera tipografía clásica, la imagen de un barco, etc. *",
             "nameForm":"requerimientoAdicional",
-            "next":true
+            "isMulti": false,
+            "isOptional": true,
+            "next": true
         },
         {
             "type":"text",
             "label":"Marca:",
-            "name": "Nombre de la marca *",
+            "question": "Nombre de la marca *",
             "nameForm":"marcaNombre",
-            "next":true
+            "validations":{
+                "required": true,
+                "minlength": 5,
+                "maxlength":50
+            },  
+            "isMulti": false,
+            "isOptional": false,
+            "next": true
         },
         {
             "type":"text",
             "label":"Cuentanos mas:",
-            "name": "Cuéntanos de qué va tu idea de negocio. Ejemplo: Me dedico a la producción y venta de calcetines... *",
+            "question": "Cuéntanos de qué va tu idea de negocio. Ejemplo: Me dedico a la producción y venta de calcetines... *",
             "nameForm":"acercade",
-            "next":true
+            "validations":{
+                "required": true,
+                "minlength": 10,
+                "maxlength": 200
+            },  
+            "isMulti": false,
+            "isOptional": false,
+            "next": true
         },
         {
             "type":"files",
             "label":"Sube un boceto o archivo",
-            "name":"Sube un archivo con algún boceto que hayas hecho o algún logo que conozcas que te gustaría que usemos para inspirarnos. Cualquier información extra que puedas proporcionar es de gran ayuda para el diseño de tu logo.",
+            "question":"Sube un archivo con algún boceto que hayas hecho o algún logo que conozcas que te gustaría que usemos para inspirarnos. Cualquier información extra que puedas proporcionar es de gran ayuda para el diseño de tu logo.",
             "nameForm": "filesUpload",
-            "next": true,
-            "total":3
+            "total":3,
+            "isMulti": true,
+            "isOptional": true,
+            "next": true
         },
         {
             "type": "select",
@@ -165,47 +191,55 @@
             ],
             "label": "Categoria/Industria del negocio:",
             "nameForm":"categoriaNegocio",
-            "name": "Selecciona a qué categoría/ industria pertenece tu negocio *",
+            "question": "Selecciona a qué categoría/ industria pertenece tu negocio *",
+            "isMulti": false,
+            "isOptional":false,
             "next": false
         },
         {
             "type":"radio",
-            "name":"Enviarme una copia de mis Respuestas.",
+            "question":"Enviarme una copia de mis Respuestas.",
             "nameForm": "copiaRespuestasCliente",
-            "options": [
-                {"id": 0, "value":"Si"},
-                {"id": 1, "value":"No"}
+            "elements": [
+                {"id": 0, "class": "col-11 m-auto", "value":"Si"},
+                {"id": 1, "class": "col-11 m-auto", "value":"No"}
             ],
+            "isMulti": false,
             "next": false
         },
         {
             "type":"radio",
-            "name":"Agregar Playera",
+            "question":"Agregar Playera",
             "nameForm": "playeraAgregar",
-            "options": [
-                {"id": 0, "value":"Si", "action":"topay", "amount": 1000},
-                {"id": 1, "value":"No", "action":"restTotal", "amount": 1000}
+            "elements": [
+                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"restTotal", "amount": 1000}
             ],
+            "isMulti": false,
             "next": false
         },
         {
             "type":"radio",
-            "name":"Agregar Tarjetas de Presentacion",
+            "question":"Agregar Tarjetas de Presentacion",
             "nameForm": "tarjetasPresentacionAgregar",
-            "options": [
-                {"id": 0, "value":"Si", "action":"topay", "amount": 1000},
-                {"id": 1, "value":"No", "action":"restTotal", "amount": 1000}
+            "elements": [
+                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"restTotal", "amount": 1000}
             ],
+            "isMulti": false,
             "next": false
         },
         {
             "type":"text-multi",
-            "name":"Agrega Informacion de Contacto",
+            "question":"Agrega Informacion de Contacto",
+            "nameForm":"user",
             "fields":[
-                {"id": 0, "label":"Nombre del Usuario (min 8 caracters)", "nameForm":"nickname", "type": "text"},
-                {"id": 1, "label":"Celular (min 8 caracters)", "nameForm":"phone", "type":"number"},
-                {"id": 2, "label":"Correo (min 8 caracters)", "nameForm":"email", "type":"email"}
+                {"id": 0, "class": "col-11 m-auto", "label":"Nombre del Usuario (min 6 caracters)", "nameForm":"nickname", "type": "text", "validations": {"required": true, "minlength": 6, "maxlength": 30}},
+                {"id": 1, "class": "col-11 m-auto", "label":"Celular (min 6 caracters)", "nameForm":"phone", "type":"number", "validations": {"required": true, "minlength": 6, "maxlength": 30}},
+                {"id": 2, "class": "col-11 m-auto", "label":"Correo (min 8 caracters)", "nameForm":"email", "type":"email", "validations": {"required": true, "minlength": 8, "maxlength": 30}}
             ],
+            "isMulti": true,
+            "isOptional": false,
             "next": true
         },
         {
