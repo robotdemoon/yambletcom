@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Formulario Logo</title>
+        <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,18 +19,18 @@
         <script src="quiz.js"></script>
     </head>
     <body>
-        <form name="quiz" action="send.php" method="POST" id="logoForm" class="loadForm" data-file="logo">
+        <form name="quiz" action="send.php" method="POST" id="logoForm">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6 m-auto">
                         <div class="ymb-quiz position-relative">
-                            <a href="#" class="btn btn-light ymb-button-back ymb-main-components" id="back" data-action="back" style="z-index: 2"><i class="fas fa-long-arrow-alt-left"></i></a>
+                            <a href="#" class="btn btn-light ymb-button-back ymb-main-components" id="back" data-action="back" style="z-index: 2" hidden><i class="fas fa-long-arrow-alt-left"></i></a>
                             <div id="container"></div>
                             <div class="row mt-4 ymb-width-full">
                                 <div class="col-xs-12 col-lg-12 text-center">
-                                    <input type="button" class="btn btn-primary btn-xs next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" disabled>
+                                    <input type="button" class="btn btn-primary btn-xs next m-auto ymb-main-components" value="Siguiente" id="next" data-action="next" hidden disabled>
                                 </div>
-                                <div class="col-xs-12 col-lg-12 mt-4 ymb-main-components" id="progress-bar-container">
+                                <div class="col-xs-12 col-lg-12 mt-4 ymb-main-components" id="progress-bar-container" hidden>
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 0%" id="formulario-progress-bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>    

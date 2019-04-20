@@ -35,11 +35,11 @@ $(() => {
             position = (position  >= total) ? total: position;
         }else if(action == 'back'){
             position--;
-            position = (position < 2) ? 2 : position;
+            position = (position < 1) ? 1 : position;
         }else{
             position = 0;
         }
-        var width = (position == total) ? 100 : ( ((position - 2) / (formulario.length - 1)) * 100 );
+        var width = (position == total) ? 100 : ( ((position - 1 ) / (formulario.length)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
         $('#container > div:nth-child('+ position +')').slideDown(750);
         if(position == total){
@@ -154,7 +154,7 @@ $(() => {
                 }
                 break;
             case 'only-button':
-                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+'  '+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5" id="btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
+                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button': 'a')+'  '+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
                 var next = true;
@@ -195,8 +195,8 @@ $(() => {
         }
     });
 
-    $('body').on('click','#btnInit', function(){
-        showHide(action = 'next');
+    $('body').on('click','.btnInit', function(){
+        showHide('next');
         $('.ymb-main-components').removeAttr('hidden');
     })
 

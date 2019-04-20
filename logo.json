@@ -1,10 +1,6 @@
 {
     "formulario":[
         {
-            "type":"only-button",
-            "name":"Logo"
-        },
-        {
             "type":"radio",
             "name":"Selecciona los diseños con los que identificas a tu marca (No importa la selección que hagas, ésta es una decisión por gusto). *",
             "nameForm": "disenosIdentificanMarca",
