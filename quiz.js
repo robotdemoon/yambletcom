@@ -7,6 +7,10 @@ $(() => {
     var container = $('#container');
     var jsontoSave = [];
     var nameJson = ($('.loadForm').attr('data-file') == undefined) ? 'general': $('.loadForm').attr('data-file');
+    var generalPay = 1000;
+    var totalTopay = 1000; //Valor del Item a pagar
+    var conceptGeneral = "Venta de Logo";
+
     //Buscamos si exite un archivo de carga
     $.getJSON('./' + nameJson + '.json', function(form) {
         formulario = form.formulario;
@@ -41,6 +45,9 @@ $(() => {
         if(position == total){
             $('#next').hide();
             var s = '';
+            jsontoSave.push({name: 'amount', question: 'Total a pagar:', answer: totalTopay});
+            jsontoSave.push({name: 'concept', question: 'Concepto a pagar:', answer: conceptGeneral});
+
             for (const k in jsontoSave) {
                 var title = '';
                 var ss = ''; 
@@ -107,9 +114,9 @@ $(() => {
                     var next = (q.next == undefined) ? true : false;
                     var img = (q.options[k].img != undefined) ? '<img src="'+ (q.options[k].img) +'" class="ymb-img mb-2">' : '';
                     r += '<div class="row"><div class="col m-2 text-center"><div class="inputGroup">'
-                    +'<input type="radio" name="' + q.nameForm + '" id="'+ q.nameForm + q.options[k].id +'" value="'+ q.options[k].value +'" data-title="'+q.name+'" data-next="'+next+'">'
+                    +'<input type="radio" class="'+((q.options[k].action != undefined) ? q.options[k].action : '')+'" name="' + q.nameForm + '" id="'+ q.nameForm + q.options[k].id +'" value="'+ q.options[k].value +'" data-title="'+q.name+'" data-next="'+next+'" '+ ((q.options[k].amount != undefined) ? 'data-amount='+ q.options[k].amount : '') +'>'
                     + img
-                    +'<label for="'+ q.nameForm + q.options[k].id +'" >'+q.options[k].value+'</label>'
+                    +'<label for="'+ q.nameForm + q.options[k].id +'" >'+q.options[k].value + ((q.amount !=undefined) ? ' +$'+q.options[k].amount:'') + '</label>'
                     +'</div></div></div>';
                 }
                 jsontoSave[ (pos * 1) + 1] =  {name: q.nameForm, question: q.name, answer:  undefined}
@@ -176,7 +183,7 @@ $(() => {
         $('#next').show();
         if(action == 'next'){
             showHide();
-            if((jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != '' && jsontoSave[position].answer != undefined) || jsontoSave[position].length != undefined))){
+            if(jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != undefined && jsontoSave[position].answer != '') || jsontoSave[position].length != undefined)){
                 $("#next").prop('disabled', false);
             }else{
                 $("#next").prop('disabled', true);
@@ -219,7 +226,14 @@ $(() => {
         if($(this).attr('data-next') != undefined){
             //Mandar a la pantalla siguiente
             if(!$(this).attr('data-next') || $(this).attr('data-next') == 'false'){
-                $("#next").prop('disabled', false).click().prop('disabled',true);
+                $("#next").prop('disabled', false).click();
+                if(jsontoSave[position] != undefined &&  ((jsontoSave[position].answer != undefined && jsontoSave[position].answer != '') || jsontoSave[position].length != undefined)){
+                    $("#next").prop('disabled',false);
+                }else{
+                    $("#next").prop('disabled',true);
+                }
+                
+                //.prop('disabled',true);
             }else{
                 if($(this).attr("data-type") != undefined && $(this).attr("data-type") == 'text-multi'){
                     for (const k in jsontoSave[position]) {
@@ -263,9 +277,12 @@ $(() => {
 
     $( "body" ).on( "submit", "#logoForm" ,function( event ) {
         event.preventDefault();
+
         data = $('#logoForm').serializeArray();
         jsonSend = JSON.stringify(jsontoSave);
         data.push({name: 'requerimientos', value: jsonSend});
+        data.push({name: 'amount', value: totalTopay});
+        data.push({name: 'concept', value: conceptGeneral});
         $.ajax({
             type: "POST",
             url: "http://165.22.133.122/public/index.php/api/choosePaymentMethod",
@@ -275,4 +292,14 @@ $(() => {
             }
          });
     });
+
+    $("body").on("click", ".topay", function(){
+        tp = (totalTopay * 1 ) + ($(this).attr('data-amount') * 1);
+        totalTopay = tp;
+    });
+
+    $("body").on("click", ".restTotal", function(){
+        tp =  (totalTopay * 1 ) - ($(this).attr('data-amount') * 1);
+        totalTopay = (tp < generalPay)? generalPay : tp;
+    })
 })

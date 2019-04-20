@@ -182,21 +182,21 @@
         },
         {
             "type":"radio",
-            "name":"Agregar Playera $1000+",
+            "name":"Agregar Playera",
             "nameForm": "playeraAgregar",
             "options": [
-                {"id": 0, "value":"Si"},
-                {"id": 1, "value":"No"}
+                {"id": 0, "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 1, "value":"No", "action":"restTotal", "amount": 1000}
             ],
             "next": false
         },
         {
             "type":"radio",
-            "name":"Agregar Tarjetas de Presentacion $1000+",
+            "name":"Agregar Tarjetas de Presentacion",
             "nameForm": "tarjetasPresentacionAgregar",
             "options": [
-                {"id": 0, "value":"Si"},
-                {"id": 1, "value":"No"}
+                {"id": 0, "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 1, "value":"No", "action":"restTotal", "amount": 1000}
             ],
             "next": false
         },
