@@ -312,19 +312,28 @@ $(() => {
 
     $( "body" ).on( "click", ".sendForm" ,function() {
         event.preventDefault();
-        data = $('#'+formToSend).serializeArray();
         let array = {};
         for (const k in jsontoSave) {
             array[k] = jsontoSave[k];
         }
+        var formData = new FormData();
+        var fileUp = {};
+        for (let index = 0; index < $("#"+formToSend+" input[type='file']").length; index++) {
+            fileUp = ($("#"+formToSend+" input[type='file']")[index]).files[0];
+            formData.append('file'+index, fileUp);
 
-        data.push({name: 'requerimientos', value: JSON.stringify(array)});
-        data.push({name: 'amount', value: totalTopay});
-        data.push({name: 'concept', value: conceptGeneral});
+        }
+
+        formData.append('requerimientos', JSON.stringify(array));
+        formData.append('amount', totalTopay);
+        formData.append('concept', conceptGeneral);
         $.ajax({
             type: "POST",
             url: url,
-            data: data,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function(msg){
               console.log(msg);
             }
