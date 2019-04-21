@@ -6,7 +6,7 @@
             "nameForm": "disenosIdentificaMarca",
             "class": "col",
             "elements": [
-                {"id": 0, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría solo con tipografía (logotipo)", "img": "./images/solotipografia.png"},
+                {"id": 0, "class": "col-12 col-md-8 col-lg-6 m-auto order-md-2", "value":"Te gustaría solo con tipografía (logotipo)", "img": "./images/solotipografia.png"},
                 {"id": 1, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que sólo se formará por medio de un símbolo o icono (Isotipo)", "img": "./images/solosimbolo.png"},
                 {"id": 2, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que tenga tipografía y además un símbolo (Imagotipo)", "img": "./images/tipografia-simbolo.png"},
                 {"id": 3, "class": "col-12 col-md-8 col-lg-6 m-auto", "value":"Te gustaría que hubiera una fusión entre símbolo y texto inseparables (Isologo)", "img": "./images/simbolo-texto.png"}
