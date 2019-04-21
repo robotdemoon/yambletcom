@@ -215,19 +215,21 @@ $(() => {
             }
             
         }else{
-            currentPosition = $(this).attr('data-position');
-            response = {name: currentField.fields[currentPosition].nameForm, value: val};
-            jsontoSave[nameField].elements[currentPosition] = response; 
-            let statusMulti = true;
-            for (const k in jsontoSave[nameField].elements) {
-                if(jsontoSave[nameField].elements[k].value == undefined){
-                    statusMulti = false;
-                }else if(currentField.fields[k].validations != undefined && validateField(currentField.fields[k].validations, val) == false){
-                    statusMulti = false;
+            if(currentField.type != "files"){
+                currentPosition = $(this).attr('data-position');
+                response = {name: currentField.fields[currentPosition].nameForm, value: val};
+                jsontoSave[nameField].elements[currentPosition] = response; 
+                let statusMulti = true;
+                for (const k in jsontoSave[nameField].elements) {
+                    if(jsontoSave[nameField].elements[k].value == undefined){
+                        statusMulti = false;
+                    }else if(currentField.fields[k].validations != undefined && validateField(currentField.fields[k].validations, val) == false){
+                        statusMulti = false;
+                    }
                 }
+                if(statusMulti)
+                    nextBehavior(true, statusMulti);
             }
-            if(statusMulti)
-                nextBehavior(true, statusMulti);
         }
     })
 
@@ -296,17 +298,19 @@ $(() => {
     });
 
     $( "body" ).on( "click", ".sendForm" ,function() {
-        console.log('sending');
         event.preventDefault();
-
         data = $('#logoForm').serializeArray();
-        jsonSend = JSON.stringify(jsontoSave);
-        data.push({name: 'requerimientos', value: jsonSend});
+        let array = {};
+        for (const k in jsontoSave) {
+            array[k] = jsontoSave[k];
+        }
+
+        data.push({name: 'requerimientos', value: JSON.stringify(array)});
         data.push({name: 'amount', value: totalTopay});
         data.push({name: 'concept', value: conceptGeneral});
         $.ajax({
             type: "POST",
-            url: "http://165.22.133.122/public/index.php/api/choosePaymentMethod",
+            url: "http://localhost/yamblet/quiz/send.php",
             data: data,
             success: function(msg){
               console.log(msg);

@@ -35,7 +35,7 @@
                             <div class="col-12 mb-4">
                                 <div id="container"></div>
                             </div>
-                            <div class="col-11 m-auto">
+                            <div class="col-11 col-md-12 m-auto">
                                 <input type="button" class="btn btn-primary btn-sm btn-block next ymb-main-components p-1" value="Siguiente" id="next" data-action="next" disabled hidden>
                             </div>
                         </div>
