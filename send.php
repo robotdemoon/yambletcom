@@ -2,9 +2,9 @@
 
 $data = json_decode($_POST['requerimientos']);
 
-var_dump(json_decode($_POST['requerimientos']));
+//var_dump(json_decode($_POST['requerimientos']));
 var_dump($data->user);
 var_dump($data->concept);
 var_dump($data->amount);
-
-var_dump($_FILES);
+//var_dump($_POST);
+//var_dump($_FILES);

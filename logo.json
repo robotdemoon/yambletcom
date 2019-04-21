@@ -213,7 +213,7 @@
             "nameForm": "playeraAgregar",
             "elements": [
                 {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
-                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"restTotal", "amount": 1000}
+                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"", "amount": 0}
             ],
             "isMulti": false,
             "next": false
@@ -224,7 +224,7 @@
             "nameForm": "tarjetasPresentacionAgregar",
             "elements": [
                 {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
-                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"restTotal", "amount": 1000}
+                {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"", "amount": 0}
             ],
             "isMulti": false,
             "next": false

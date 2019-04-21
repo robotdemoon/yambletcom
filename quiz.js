@@ -18,6 +18,10 @@ $(() => {
     var url = "";
     var formToSend = ($('.loadForm').attr('id') == undefined) ? 'logoForm': $('.loadForm').attr('id');
 
+    /**
+     * [Campos que cobran iguales al json]
+     */
+    var fieldsToPay = ['tarjetasPresentacionAgregar', 'playeraAgregar'];
 
     //Obtnemos la url para el post
     $.getJSON('./configs.json', function(u) {
@@ -300,22 +304,28 @@ $(() => {
      * [Metodos Adicionales]
      */
 
-    $("body").on("click", ".topay", function(){
-        tp = (totalTopay * 1 ) + ($(this).attr('data-amount') * 1);
-        totalTopay = tp;
-    });
-
-    $("body").on("click", ".restTotal", function(){
-        tp =  (totalTopay * 1 ) - ($(this).attr('data-amount') * 1);
-        totalTopay = (tp < generalPay)? generalPay : tp;
-    });
-
     $( "body" ).on( "click", ".sendForm" ,function() {
         event.preventDefault();
         let array = {};
+        let totalOfOptions = 0;
         for (const k in jsontoSave) {
             array[k] = jsontoSave[k];
+            //Revisamos si se debe de pagar
         }
+
+        //Realizamos la suma d elos campos que cobran
+
+        for (const tp in fieldsToPay) {
+            itemTopPay = jsontoSave[fieldsToPay[tp]];
+            if(itemTopPay.value == "Si"){
+                formItem = formulario.filter(x => x.nameForm === fieldsToPay[tp]);
+                formAmount = formItem[0].elements.filter(y => y.value === "Si");
+                totalOfOptions = totalOfOptions + formAmount[0].amount;
+            }
+        }
+        array['concept'] =  conceptGeneral;
+        array['amount'] = totalOfOptions + totalTopay;
+
         var formData = new FormData();
         var fileUp = {};
         for (let index = 0; index < $("#"+formToSend+" input[type='file']").length; index++) {
@@ -325,7 +335,7 @@ $(() => {
         }
 
         formData.append('requerimientos', JSON.stringify(array));
-        formData.append('amount', totalTopay);
+        formData.append('amount', (totalTopay + totalOfOptions));
         formData.append('concept', conceptGeneral);
         $.ajax({
             type: "POST",
