@@ -1,6 +1,11 @@
 
 
 $(() => {
+
+    /**
+     * [Variables de configuracion]
+     */
+
     var formulario;
     var position = 0;
     var total = 0;
@@ -10,6 +15,14 @@ $(() => {
     var generalPay = 1000;
     var totalTopay = 1000; //Valor del Item a pagar
     var conceptGeneral = "Venta de Logo";
+    var url = "";
+    var formToSend = ($('.loadForm').attr('id') == undefined) ? 'logoForm': $('.loadForm').attr('id');
+
+
+    //Obtnemos la url para el post
+    $.getJSON('./configs.json', function(u) {
+        url = u.url_post;
+    });
 
     //Buscamos si exite un archivo de carga
     $.getJSON('./' + nameJson + '.json', function(form) {
@@ -299,7 +312,7 @@ $(() => {
 
     $( "body" ).on( "click", ".sendForm" ,function() {
         event.preventDefault();
-        data = $('#logoForm').serializeArray();
+        data = $('#'+formToSend).serializeArray();
         let array = {};
         for (const k in jsontoSave) {
             array[k] = jsontoSave[k];
@@ -310,7 +323,7 @@ $(() => {
         data.push({name: 'concept', value: conceptGeneral});
         $.ajax({
             type: "POST",
-            url: "http://localhost/yamblet/quiz/send.php",
+            url: url,
             data: data,
             success: function(msg){
               console.log(msg);
@@ -319,7 +332,7 @@ $(() => {
     })
 
 
-    $( "body" ).on( "submit", "#logoForm" ,function( event ) {
+    $( "body" ).on( "submit", "#"+formToSend+", form" ,function( event ) {
         event.preventDefault();
     });
 })
