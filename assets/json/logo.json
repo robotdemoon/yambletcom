@@ -1,4 +1,5 @@
 {
+    "unit_price": 10,
     "formulario":[
         {
             "type":"radio",
@@ -94,8 +95,8 @@
         },
         {
             "type":"text",
-            "label":"Marca:",
-            "question": "Nombre de la marca *",
+            "label":"Marca (Minimo 5 caracteres | Maximo 50)*:",
+            "question": "Nombre de la marca",
             "nameForm":"marcaNombre",
             "validations":{
                 "required": true,
@@ -108,8 +109,8 @@
         },
         {
             "type":"text",
-            "label":"Cuentanos mas:",
-            "question": "Cuéntanos de qué va tu idea de negocio. Ejemplo: Me dedico a la producción y venta de calcetines... *",
+            "label":"Cuentanos mas (Minimo 10 caracteres | Maximo 200)*:",
+            "question": "Cuéntanos de qué va tu idea de negocio. Ejemplo: Me dedico a la producción y venta de calcetines...",
             "nameForm":"acercade",
             "validations":{
                 "required": true,
@@ -212,7 +213,7 @@
             "question":"Agregar Playera",
             "nameForm": "playeraAgregar",
             "elements": [
-                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 5},
                 {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"", "amount": 0}
             ],
             "isMulti": false,
@@ -223,7 +224,7 @@
             "question":"Agregar Tarjetas de Presentacion",
             "nameForm": "tarjetasPresentacionAgregar",
             "elements": [
-                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 1000},
+                {"id": 0, "class": "col-11 m-auto", "value":"Si", "action":"topay", "amount": 5},
                 {"id": 1, "class": "col-11 m-auto", "value":"No", "action":"", "amount": 0}
             ],
             "isMulti": false,
@@ -246,7 +247,7 @@
             "type":"only-button",
             "name":"Finalizar",
             "action": "sendForm",
-            "typeBtn":"submit"
+            "typeBtn":"button"
         }
     ]
 }

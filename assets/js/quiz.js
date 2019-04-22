@@ -12,8 +12,7 @@ $(() => {
     var container = $('#container');
     var jsontoSave = [];
     var nameJson = ($('.loadForm').attr('data-file') == undefined) ? 'general': $('.loadForm').attr('data-file');
-    var generalPay = 1000;
-    var totalTopay = 1000; //Valor del Item a pagar
+    var totalTopay = 0; //Valor del Item a pagar
     var conceptGeneral = "Venta de Logo";
     var url = "";
     var formToSend = ($('.loadForm').attr('id') == undefined) ? 'logoForm': $('.loadForm').attr('id');
@@ -24,13 +23,14 @@ $(() => {
     var fieldsToPay = ['tarjetasPresentacionAgregar', 'playeraAgregar'];
 
     //Obtnemos la url para el post
-    $.getJSON('./configs.json', function(u) {
+    $.getJSON('./assets/json/configs.json', function(u) {
         url = u.url_post;
     });
 
     //Buscamos si exite un archivo de carga
-    $.getJSON('./' + nameJson + '.json', function(form) {
+    $.getJSON('./assets/json/' + nameJson + '.json', function(form) {
         formulario = form.formulario;
+        totalTopay = form.unit_price;
         generateForm();
     });
 
@@ -45,7 +45,7 @@ $(() => {
     }
 
     function showHide(action = 'next'){
-        $('#container > div').slideUp(((position == 0) ? 0 : 750));
+        $('#container > div').hide();//slideUp(((position == 0) ? 0 : 750));
         if(action == 'next'){
             position++;
             position = (position  >= total) ? total: position;
@@ -59,12 +59,23 @@ $(() => {
         
         var width = (position == total) ? 100 : ( ((position - 1 ) / (formulario.length)) * 100 );
         $("#formulario-progress-bar").css('width', width + '%');
-        $('#container > div:nth-child('+ position +')').slideDown(750);
+        $('#container > div:nth-child('+ position +')').show();//.slideDown(750);
         if(position == total){
            // $('#next').hide();
             $('#next').prop('hidden',true);
             var s = '';
-            jsontoSave['amount'] = {question: 'Total a pagar:', value: totalTopay};
+            //Hacemos la suma
+            let totalOfOptions = 0;
+            for (const tp in fieldsToPay) {
+                itemTopPay = jsontoSave[fieldsToPay[tp]];
+                if(itemTopPay.value == "Si"){
+                    formItem = formulario.filter(x => x.nameForm === fieldsToPay[tp]);
+                    formAmount = formItem[0].elements.filter(y => y.value === "Si");
+                    totalOfOptions = totalOfOptions + formAmount[0].amount;
+                }
+            }
+
+            jsontoSave['amount'] = {question: 'Total a pagar:', value: totalTopay + totalOfOptions};
             jsontoSave['concept'] = {question: 'Concepto a pagar:', value: conceptGeneral};
 
             for (const k in jsontoSave) {
@@ -171,7 +182,7 @@ $(() => {
                 }
                 break;
             case 'only-button':
-                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button ': 'a ')+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit '+((q.action != undefined && q.typeBtn == 'submit') ? q.action: '')+'">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
+                r = '<div class="row ymb-minHeight"><div class="col d-flex align-items-center justify-content-center"><'+((q.action) ? 'button ': 'a ')+((q.action && q.typeBtn != undefined) ? 'type="'+q.typeBtn+'"': '')+'class="btn btn-success text-light btn-lg pl-5 pr-5 btnInit '+((q.action != undefined && q.typeBtn == 'button') ? q.action: '')+'">'+ q.name + '</'+ ((q.action) ? 'button': 'a')+'></div></div>';
                 break;
             case 'text-multi':
                 var o = '';
@@ -200,19 +211,29 @@ $(() => {
     });
 
     $('body').on('change', '.valid-value  input, .valid-value  select', function(){
+        validateData($(this));
+    });
+
+    $('body').on('keydown', '.valid-value  input', function(){
+        validateData($(this));
+    });
+
+    //Metod para revisar el status de todo el sistema
+
+    function validateData(it){
         var pos = position - 1;
         var currentField = formulario[pos];
         var isMulti = currentField.isMulti;
         var next = currentField.next;
         var response;
-        var val = $(this).val();
-        var nameField = (($(this).attr('data-name-alias') != undefined) ? $(this).attr('data-name-alias') : $(this).attr('name'));
+        var val = it.val();
+        var nameField = ((it.attr('data-name-alias') != undefined) ? it.attr('data-name-alias') : it.attr('name'));
         var validations = {required: false, minlength: 6, maxlength: 60};
         var optional = (currentField.isOptional != undefined) ? currentField.isOptional : false;
         nextBehavior(next, optional);
         if(!isMulti){
             if(currentField.type == "checkbox"){
-                if(!$(this).prop('checked')){
+                if(!it.prop('checked')){
                     jsontoSave[currentField.nameForm].elements = jsontoSave[currentField.nameForm].elements.filter( x => x !== val);
                 }else{
                     jsontoSave[ currentField.nameForm ].elements.push(val);
@@ -233,7 +254,7 @@ $(() => {
             
         }else{
             if(currentField.type != "files"){
-                currentPosition = $(this).attr('data-position');
+                currentPosition = it.attr('data-position');
                 response = {name: currentField.fields[currentPosition].nameForm, value: val};
                 jsontoSave[nameField].elements[currentPosition] = response; 
                 let statusMulti = true;
@@ -248,7 +269,7 @@ $(() => {
                     nextBehavior(true, statusMulti);
             }
         }
-    })
+    }
 
 
     function validateField(validations, value){
@@ -305,7 +326,6 @@ $(() => {
      */
 
     $( "body" ).on( "click", ".sendForm" ,function() {
-        event.preventDefault();
         let array = {};
         let totalOfOptions = 0;
         for (const k in jsontoSave) {
@@ -313,7 +333,7 @@ $(() => {
             //Revisamos si se debe de pagar
         }
 
-        //Realizamos la suma d elos campos que cobran
+        //Realizamos la suma delos campos que cobran
 
         for (const tp in fieldsToPay) {
             itemTopPay = jsontoSave[fieldsToPay[tp]];
@@ -326,6 +346,7 @@ $(() => {
         array['concept'] =  conceptGeneral;
         array['amount'] = totalOfOptions + totalTopay;
 
+        console.log(totalOfOptions + totalTopay);
         var formData = new FormData();
         var fileUp = {};
         for (let index = 0; index < $("#"+formToSend+" input[type='file']").length; index++) {
@@ -345,13 +366,16 @@ $(() => {
             contentType: false,
             processData: false,
             success: function(msg){
-              console.log(msg);
+              $("body").empty().html(msg);
             }
          });
     })
 
-
-    $( "body" ).on( "submit", "#"+formToSend+", form" ,function( event ) {
-        event.preventDefault();
-    });
+    $('body').on('change', 'input[type="file"]', function(){
+        s= ""
+        if($(this)[0].files[0] != undefined){
+            s = $(this)[0].files[0].name;
+        }
+       $(this).parent('div').children('label').html(s);
+    })
 })
